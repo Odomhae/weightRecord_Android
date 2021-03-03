@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
@@ -24,6 +25,8 @@ class ImageViewerActivity : AppCompatActivity() {
             val imageView = ImageView(this)
             Glide.with(imageView)
                     .load(it.uri)
+                    .placeholder(R.drawable.ic_baseline_add_circle_24)
+                    .error(R.drawable.ef_ic_arrow_back)
                     .into(imageView)
             linearLayout.addView(imageView)
         }
@@ -35,6 +38,7 @@ class ImageViewerActivity : AppCompatActivity() {
         fun start(context: Context, images: List<Image?>?) {
             val intent = Intent(context, ImageViewerActivity::class.java)
             intent.putParcelableArrayListExtra("images", images as ArrayList<out Parcelable?>?)
+            Log.d("Ttt",context.toString()+" "+intent)
             context.startActivity(intent)
         }
     }
