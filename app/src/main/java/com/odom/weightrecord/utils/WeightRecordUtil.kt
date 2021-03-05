@@ -3,6 +3,8 @@ package com.odom.weightrecord.utils
 import android.content.Context
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.request.RequestOptions
 
 
 object WeightRecordUtil {
@@ -17,6 +19,7 @@ object WeightRecordUtil {
                     .skipMemoryCache(true)
                     .into(imageView)
             }
+
         } catch (e: Exception) {
             e.printStackTrace()
         }

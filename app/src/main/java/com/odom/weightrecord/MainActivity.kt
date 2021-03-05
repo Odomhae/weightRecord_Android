@@ -4,20 +4,24 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.media.Image
 import android.os.Bundle
+import android.os.Environment
+import android.util.Log
 import android.view.KeyEvent
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.esafirm.imagepicker.features.ImagePicker
-import com.esafirm.imagepicker.model.Image
-import com.odom.weightrecord.constants.WeightRecordConstants.CODE_GALLERY
-import com.odom.weightrecord.constants.WeightRecordConstants.CODE_TAKE_PICTURE
+import com.github.dhaval2404.imagepicker.ImagePicker
+
+import com.odom.weightrecord.constants.WeightRecordConstants.CODE_GET_IMAGE_FILE
 import com.odom.weightrecord.utils.WeightRecordUtil.displayImage
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
+import java.io.File
 import java.util.*
 
 
@@ -29,7 +33,6 @@ class MainActivity : AppCompatActivity() {
 
     private var arrayThumbnails: ArrayList<Image> = ArrayList()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -40,95 +43,108 @@ class MainActivity : AppCompatActivity() {
 
     private fun setLayoutActivity() {
 
-        list_workout.adapter = adapter
+        listView_workout.adapter = adapter
+        listView_workout.choiceMode = ListView.CHOICE_MODE_NONE
+        
+        listView_workout.setOnItemClickListener { parent, view, position, id ->
+
+            showBox(items, position)
+            setStringArrayPref("listData", items)
+        }
 
         bt_add_image.setOnClickListener { addImg() }
         bt_input_workout.setOnClickListener { addList() }
-        bt_delete_image.setOnClickListener {
-
-            // 기존 이미지 삭제하기
-            report_write_iv_image.setImageResource(0)
-            // 배열에서 삭제 .. 근데 굳이 배열일 필요가 있나? 하나만 선택하는데?
-            arrayThumbnails.clear()
-        }
+//        bt_delete_image.setOnClickListener {
+//            // 배열에서 삭제 .. 근데 굳이 배열일 필요가 있나? 하나만 선택하는데?
+//            arrayThumbnails.clear()
+//        }
 
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
-        //앨범 이미지 선택
-        if (requestCode == CODE_GALLERY) {
-            if (resultCode == Activity.RESULT_OK) {
-                val images: List<Image> = ImagePicker.getImages(data)
+        // 이미지 선택
+        if (resultCode == Activity.RESULT_OK) {
+            val file = ImagePicker.getFile(data)!!
 
-                if (images.isNotEmpty()) {
-                    arrayThumbnails.addAll(images)
-                    setThumbnails(arrayThumbnails)
-                }
-            }
+            val intent = Intent(this, ImageViewerActivity::class.java)
+            intent.putExtra("fileName", file)
+          //  ImageViewerActivity.start(this, file)
+            Log.d("ttttt1",file.toString())
+            startActivity(intent)
 
-            //카메라 촬영
-        } else if (requestCode == CODE_TAKE_PICTURE) {
-            if (resultCode == Activity.RESULT_OK) {
-                val images: List<Image> = ImagePicker.getImages(data)
-
-                if (images.isNotEmpty()) {
-                    arrayThumbnails.addAll(images)
-                    setThumbnails(arrayThumbnails)
-                }
-            }
-
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show()
         }
 
-        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    // 알림 박스에서 항목 수정 .. 필요한 기능인가?
+    fun showBox(list :ArrayList<String>, position :Int) {
+
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.input_box, null)
+        val mBuilder = AlertDialog.Builder(this)
+                .setView(mDialogView)
+
+        val bt1 = mDialogView.findViewById(R.id.btdone) as Button
+        val bt2 = mDialogView.findViewById(R.id.btdelete) as Button
+        val inputEditText = mDialogView.findViewById(R.id.txtinput) as EditText
+        inputEditText.setText(list[position])
+
+        //show dialog
+        val mAlertDialog = mBuilder.show()
+        //login button click of custom layout
+        bt1.setOnClickListener {
+            list[position] = inputEditText.text.toString()
+            setStringArrayPref("listData", list)
+            adapter.notifyDataSetChanged()
+            //dismiss dialog
+            mAlertDialog.dismiss()
+        }
+
+        // 삭제
+        bt2.setOnClickListener {
+
+            //알림 & 화면 종료
+            val builder = AlertDialog.Builder(this@MainActivity)
+
+            builder.setTitle("삭제합니다")
+                    .setPositiveButton("ok"
+                    ) { _, _ ->
+                        list.removeAt(position)
+                        setStringArrayPref("listData", list)
+                        adapter.notifyDataSetChanged()
+                        mAlertDialog.dismiss()
+                    }
+                    .setNegativeButton("cancel"
+                    ) { _, _ ->
+                        mAlertDialog.dismiss()
+                    }
+
+            val alertDialog = builder.create()
+            alertDialog.show()
+        }
     }
 
 
     private fun addImg() {
 
-        val items = arrayOf<CharSequence>("앨범", "사진 촬영")
-
-        val dialog: Dialog =
-                AlertDialog.Builder(this)
-                        .setTitle("사진 선택하기")
-                        .setItems(items) { dialog, which ->
-                            changeImg(which)
-                        }
-                        .setOnKeyListener { dialog, keyCode, event ->
-                    if (keyCode == KeyEvent.KEYCODE_BACK) {
-                        //nothing
-                    }
-                    false
-                }.create()
-
-        dialog.show()
+        ImagePicker.with(this)
+            .crop()
+            //.galleryOnly()
+//                    .galleryMimeTypes(
+//                            mimeTypes = arrayOf(
+//                                    "image/png",
+//                                    "image/jpg",
+//                                    "image/jpeg"
+//                            )
+//                    )
+            .maxResultSize(1080, 1920)
+            .start()
     }
-
-    private fun changeImg(selectDialogPostion: Int) {
-
-        // 앨범에서 가져오기
-        if (selectDialogPostion == 0) {
-            ImagePicker.create(this)
-                    .single() // 하나만 선택
-                    .showCamera(false) // multi mode (default mode)
-                    .start(CODE_GALLERY) // start image picker activity with request code
-
-        //  사진 촬영
-        } else if (selectDialogPostion == 1) {
-            ImagePicker
-                    .cameraOnly()
-                    .start(this, CODE_TAKE_PICTURE)
-        }
-    }
-
-    // 이미지 추가
-    private fun setThumbnails(arrayThumbnails: ArrayList<Image>) {
-        report_write_iv_image!!.visibility = View.INVISIBLE
-
-        displayImage(this, arrayThumbnails[0].path, report_write_iv_image)
-        report_write_iv_image!!.visibility = View.VISIBLE
-    }
-
 
     // 종목 추가버튼 함수
     private fun addList(){

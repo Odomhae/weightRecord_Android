@@ -1,62 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/ef_grey"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/black"
             android:orientation="horizontal">
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:id="@+id/button2"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:text="close" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:text="닫기" />
 
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/button3"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:text="share" />
-
+                android:layout_height="wrap_content"
+                android:text="공유" />
 
         </LinearLayout>
 
 
-    </LinearLayout>
-
-    <com.ssomai.android.scalablelayout.ScalableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        app:scale_base_width="332"
-        app:scale_base_height="211">
-
         <ImageView
-            android:id="@+id/iv_image"
+            android:id="@+id/imgProfile"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            app:scale_width="332"
-            app:scale_height="211"/>
+            android:layout_height="wrap_content" />
 
-    </com.ssomai.android.scalablelayout.ScalableLayout>
-
-
+    </LinearLayout>
 
 </ScrollView>

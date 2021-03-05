@@ -2,6 +2,7 @@ package com.odom.weightrecord
 
 import android.content.Context
 import android.content.Intent
+import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
@@ -9,37 +10,33 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
-import com.esafirm.imagepicker.model.Image
+import com.bumptech.glide.request.RequestOptions
+import com.odom.weightrecord.utils.WeightRecordUtil.displayImage
 import kotlinx.android.synthetic.main.activity_image_viewer.*
+import java.io.File
+import java.io.Serializable
 import java.util.ArrayList
 
 class ImageViewerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_image_viewer)
 
-        val linearLayout = findViewById<LinearLayout>(R.id.container)
-        val images: List<Image>? = intent.getParcelableArrayListExtra("images")
+        val file: Serializable? = intent.getSerializableExtra("fileName")
 
-        images?.forEach {
-            val imageView = ImageView(this)
-            Glide.with(imageView)
-                    .load(it.uri)
-                    .placeholder(R.drawable.ic_baseline_add_circle_24)
-                    .error(R.drawable.ef_ic_arrow_back)
-                    .into(imageView)
-            linearLayout.addView(imageView)
-        }
+        Log.d("TTTTt123", file.toString())
+        imgProfile.setLocalImage(file as File, imgProfile)
+        displayImage(this, file.path, imgProfile)
 
         button2.setOnClickListener { finish() }
     }
 
-    companion object {
-        fun start(context: Context, images: List<Image?>?) {
-            val intent = Intent(context, ImageViewerActivity::class.java)
-            intent.putParcelableArrayListExtra("images", images as ArrayList<out Parcelable?>?)
-            Log.d("Ttt",context.toString()+" "+intent)
-            context.startActivity(intent)
-        }
+
+    fun ImageView.setLocalImage(file: File, imageView: ImageView) {
+        Glide.with(this)
+            .load(file)
+            .into(imageView)
+
     }
 }
