@@ -5,6 +5,7 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.request.RequestOptions
+import java.io.File
 
 
 object WeightRecordUtil {
@@ -23,6 +24,14 @@ object WeightRecordUtil {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    // 사진 등록
+    fun ImageView.setLocalImage(file: File, imageView: ImageView) {
+        Glide.with(this)
+            .load(file)
+            .into(imageView)
+
     }
 
 }

@@ -2,26 +2,16 @@ package com.odom.weightrecord
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.media.Image
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.github.dhaval2404.imagepicker.ImagePicker
-
-import com.odom.weightrecord.constants.WeightRecordConstants.CODE_GET_IMAGE_FILE
-import com.odom.weightrecord.utils.WeightRecordUtil.displayImage
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
-import java.io.File
 import java.util.*
 
 
@@ -30,8 +20,6 @@ class MainActivity : AppCompatActivity() {
     // 리스트뷰 아이템, 리스트뷰 어댑터
     val items = ArrayList<String>()
     val adapter by lazy {  ArrayAdapter(this, android.R.layout.select_dialog_item, items) }
-
-    private var arrayThumbnails: ArrayList<Image> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,11 +42,6 @@ class MainActivity : AppCompatActivity() {
 
         bt_add_image.setOnClickListener { addImg() }
         bt_input_workout.setOnClickListener { addList() }
-//        bt_delete_image.setOnClickListener {
-//            // 배열에서 삭제 .. 근데 굳이 배열일 필요가 있나? 하나만 선택하는데?
-//            arrayThumbnails.clear()
-//        }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -70,8 +53,8 @@ class MainActivity : AppCompatActivity() {
 
             val intent = Intent(this, ImageViewerActivity::class.java)
             intent.putExtra("fileName", file)
-          //  ImageViewerActivity.start(this, file)
-            Log.d("ttttt1",file.toString())
+
+            Log.d("TAG",file.toString())
             startActivity(intent)
 
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
@@ -134,7 +117,6 @@ class MainActivity : AppCompatActivity() {
 
         ImagePicker.with(this)
             .crop()
-            //.galleryOnly()
 //                    .galleryMimeTypes(
 //                            mimeTypes = arrayOf(
 //                                    "image/png",
