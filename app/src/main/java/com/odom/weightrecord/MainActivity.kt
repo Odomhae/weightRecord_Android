@@ -4,22 +4,30 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.widget.*
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ListView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.odom.weightrecord.adapter.ListviewAdapter
+import com.odom.weightrecord.utils.ListViewItem
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
-import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
 
     // 리스트뷰 아이템, 리스트뷰 어댑터
-    val items = ArrayList<String>()
-    val adapter by lazy {  ArrayAdapter(this, android.R.layout.select_dialog_item, items) }
+    val items = ArrayList<ListViewItem>()
+    var listviewAdapter = ListviewAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,17 +39,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun setLayoutActivity() {
 
-        listView_workout.adapter = adapter
+        listView_workout.adapter = listviewAdapter
         listView_workout.choiceMode = ListView.CHOICE_MODE_NONE
         
-        listView_workout.setOnItemClickListener { parent, view, position, id ->
+        listView_workout.setOnItemClickListener { _, _, position, _ ->
 
-            showBox(items, position)
+            dialogUpdateDelete(items, position)
             setStringArrayPref("listData", items)
         }
 
-        bt_add_image.setOnClickListener { addImg() }
         bt_input_workout.setOnClickListener { addList() }
+        bt_add_image.setOnClickListener { addImg() }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -49,12 +57,19 @@ class MainActivity : AppCompatActivity() {
 
         // 이미지 선택
         if (resultCode == Activity.RESULT_OK) {
+
             val file = ImagePicker.getFile(data)!!
+            val listviewImage = getBitmapFromView(listView_workout)
+
+            Log.d("TAG1",file.toString())
+           //Log.d("TAG2",listviewImage.toString())
 
             val intent = Intent(this, ImageViewerActivity::class.java)
+            // 이미지 선택
             intent.putExtra("fileName", file)
-
-            Log.d("TAG",file.toString())
+            // 리스트도 이미지로 변환해서
+        //    intent.putExtra("listViewImg", listviewImage)
+            // 액티비티 실행
             startActivity(intent)
 
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
@@ -65,26 +80,45 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    // 알림 박스에서 항목 수정 .. 필요한 기능인가?
-    fun showBox(list :ArrayList<String>, position :Int) {
+    // 리스트뷰 이미지로 변환.. 근데 이미지로 변환하면 크기 조절할때 글자가 깨질듯?
+    private fun getBitmapFromView(view: View): Bitmap? {
+        val returnedBitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(returnedBitmap)
+        val bgDrawable: Drawable = view.background
 
-        val mDialogView = LayoutInflater.from(this).inflate(R.layout.input_box, null)
+        bgDrawable.draw(canvas)
+
+        view.draw(canvas)
+        return returnedBitmap
+    }
+
+    // 알림 박스에서 항목 수정 .. 필요한 기능인가?
+    private fun dialogUpdateDelete(list :ArrayList<ListViewItem>, position :Int) {
+
+        val mDialogView = LayoutInflater.from(this).inflate(R.layout.listview_update, null)
         val mBuilder = AlertDialog.Builder(this)
                 .setView(mDialogView)
 
-        val bt1 = mDialogView.findViewById(R.id.btdone) as Button
-        val bt2 = mDialogView.findViewById(R.id.btdelete) as Button
-        val inputEditText = mDialogView.findViewById(R.id.txtinput) as EditText
-        inputEditText.setText(list[position])
+        val bt1 = mDialogView.findViewById(R.id.bt_done) as Button
+        val bt2 = mDialogView.findViewById(R.id.bt_delete) as Button
+        val workoutNameText = mDialogView.findViewById(R.id.txt_workoutName) as EditText
+        val weightText = mDialogView.findViewById(R.id.txt_weight) as EditText
+        val repsText = mDialogView.findViewById(R.id.txt_reps) as EditText
 
-        //show dialog
+        workoutNameText.setText(list[position].workoutName)
+        weightText.setText(list[position].weight)
+        repsText.setText(list[position].reps)
+
         val mAlertDialog = mBuilder.show()
-        //login button click of custom layout
+        // 수정
         bt1.setOnClickListener {
-            list[position] = inputEditText.text.toString()
+            list[position].workoutName = workoutNameText.toString()
+            list[position].weight = weightText.toString()
+            list[position].reps = repsText.toString()
+
             setStringArrayPref("listData", list)
-            adapter.notifyDataSetChanged()
-            //dismiss dialog
+            listviewAdapter.notifyDataSetChanged()
+
             mAlertDialog.dismiss()
         }
 
@@ -99,7 +133,7 @@ class MainActivity : AppCompatActivity() {
                     ) { _, _ ->
                         list.removeAt(position)
                         setStringArrayPref("listData", list)
-                        adapter.notifyDataSetChanged()
+                        listviewAdapter.notifyDataSetChanged()
                         mAlertDialog.dismiss()
                     }
                     .setNegativeButton("cancel"
@@ -128,26 +162,36 @@ class MainActivity : AppCompatActivity() {
             .start()
     }
 
-    // 종목 추가버튼 함수
+    // 운동 추가
     private fun addList(){
-        if(txt_exercise.text.isEmpty()){
+        if(txt_workoutName.text.isEmpty()){
             Toast.makeText(applicationContext, "종목값이 비었습니다", Toast.LENGTH_SHORT).show()
         }
+
         // 빈 입력 아니면 추가
         else{
-            // 텍스트 추가
-            items.add(txt_exercise.text.toString())
+
+            val item1 = ListViewItem()
+            item1.workoutName = txt_workoutName.text.toString()
+            item1.weight = txt_weight.text.toString()
+            item1.reps = txt_reps.text.toString()
+
+            items.add(item1)
+            for(i in 0 until items.size)
+             Log.d("TAG", items[i].workoutName.toString() + " "+ items[i].weight.toString())
 
             // 배열로 저장
             setStringArrayPref("listData", items)
-            txt_exercise.setText("")
-            adapter.notifyDataSetChanged()
+            txt_workoutName.setText("")
+
+            listviewAdapter.addItem(item1.workoutName.toString(), item1.weight.toString(), item1.reps.toString())
+            listviewAdapter.notifyDataSetChanged()
         }
     }
 
 
     // JSON 배열로 저장
-    fun setStringArrayPref(key: String, values: ArrayList<String>) {
+    fun setStringArrayPref(key: String, values: ArrayList<ListViewItem>) {
 
         val prefs = getSharedPreferences("SETTINGS", Context.MODE_PRIVATE)
         val editor = prefs.edit()

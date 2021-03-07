@@ -1,6 +1,7 @@
 package com.odom.weightrecord
 
 
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -17,8 +18,10 @@ class ImageViewerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_image_viewer)
 
         val file: Serializable? = intent.getSerializableExtra("fileName")
+//        val listViewImag = intent.extras!!.get("listViewImg") as Bitmap
 
-        Log.d("TAG", file.toString())
+        Log.d("TAG1", file.toString())
+  //      Log.d("TAG2", listViewImag.toString())
         imgProfile.setLocalImage(file as File, imgProfile)
         //displayImage(this, (file as File).path, imgProfile)
 
