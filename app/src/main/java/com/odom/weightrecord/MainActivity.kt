@@ -112,11 +112,13 @@ class MainActivity : AppCompatActivity() {
         val mAlertDialog = mBuilder.show()
         // 수정
         bt1.setOnClickListener {
-            list[position].workoutName = workoutNameText.toString()
-            list[position].weight = weightText.toString()
-            list[position].reps = repsText.toString()
+            list[position].workoutName = workoutNameText.text.toString()
+            list[position].weight = weightText.text.toString()
+            list[position].reps = repsText.text.toString()
 
-            setStringArrayPref("listData", list)
+            Log.d("TAGGing", list[position].workoutName+ " "+ list[position].weight)
+
+            setStringArrayPref("listData", list) // 변경은 되는데 반영이 안되네..
             listviewAdapter.notifyDataSetChanged()
 
             mAlertDialog.dismiss()
@@ -131,9 +133,10 @@ class MainActivity : AppCompatActivity() {
             builder.setTitle("삭제합니다")
                     .setPositiveButton("ok"
                     ) { _, _ ->
-                        list.removeAt(position)
-                        setStringArrayPref("listData", list)
+                        list.removeAt(position)  //  아 삭제는 되는디 반영이 안되네 ?
                         listviewAdapter.notifyDataSetChanged()
+                        setStringArrayPref("listData", list)
+
                         mAlertDialog.dismiss()
                     }
                     .setNegativeButton("cancel"
