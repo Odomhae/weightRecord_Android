@@ -21,6 +21,7 @@ import com.odom.weightrecord.adapter.ListviewAdapter
 import com.odom.weightrecord.utils.ListViewItem
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
+import org.json.JSONException
 
 
 class MainActivity : AppCompatActivity() {
@@ -118,8 +119,8 @@ class MainActivity : AppCompatActivity() {
 
             Log.d("TAGGing", list[position].workoutName+ " "+ list[position].weight)
 
-            setStringArrayPref("listData", list) // 변경은 되는데 반영이 안되네..
-            listviewAdapter.notifyDataSetChanged()
+            setStringArrayPref("listData", list)
+            listviewAdapter.updateReceiptsList(list)
 
             mAlertDialog.dismiss()
         }
@@ -133,9 +134,8 @@ class MainActivity : AppCompatActivity() {
             builder.setTitle("삭제합니다")
                     .setPositiveButton("ok"
                     ) { _, _ ->
-                        list.removeAt(position)  //  아 삭제는 되는디 반영이 안되네 ?
-                        listviewAdapter.notifyDataSetChanged()
-                        setStringArrayPref("listData", list)
+                        list.removeAt(position)
+                        listviewAdapter.updateReceiptsList(list)
 
                         mAlertDialog.dismiss()
                     }
@@ -186,6 +186,8 @@ class MainActivity : AppCompatActivity() {
             // 배열로 저장
             setStringArrayPref("listData", items)
             txt_workoutName.setText("")
+            txt_weight.setText("")
+            txt_reps.setText("")
 
             listviewAdapter.addItem(item1.workoutName.toString(), item1.weight.toString(), item1.reps.toString())
             listviewAdapter.notifyDataSetChanged()
@@ -213,5 +215,6 @@ class MainActivity : AppCompatActivity() {
 
         editor.apply()
     }
+
 
 }

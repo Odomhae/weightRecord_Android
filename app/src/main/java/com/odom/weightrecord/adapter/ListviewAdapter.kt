@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.EditText
 import android.widget.TextView
 import com.odom.weightrecord.R
 import com.odom.weightrecord.utils.ListViewItem
@@ -51,6 +50,13 @@ class ListviewAdapter : BaseAdapter() {
 
     override fun getCount(): Int {
         return listViewItemList.size
+    }
+
+    fun updateReceiptsList(newlist: ArrayList<ListViewItem>) {
+        listViewItemList.clear()
+        listViewItemList.addAll(newlist)
+        this.notifyDataSetChanged()
+
     }
 
     // 아이템 데이터 추가를 위한 함수
