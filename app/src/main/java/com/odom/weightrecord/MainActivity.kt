@@ -167,13 +167,13 @@ class MainActivity : AppCompatActivity() {
 
     // 운동 추가
     private fun addList(){
+
+        // 빈 입력 아니면 추가
         if(txt_workoutName.text.isEmpty()){
             Toast.makeText(applicationContext, "종목값이 비었습니다", Toast.LENGTH_SHORT).show()
         }
 
-        // 빈 입력 아니면 추가
         else{
-
             val item1 = ListViewItem()
             item1.workoutName = txt_workoutName.text.toString()
             item1.weight = txt_weight.text.toString()

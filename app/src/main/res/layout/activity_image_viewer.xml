@@ -24,9 +24,17 @@
                 android:text="닫기" />
 
             <Button
+                android:id="@+id/bt_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
                 android:text="공유" />
+
+            <Button
+                android:id="@+id/bt_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="저장" />
 
         </LinearLayout>
 
