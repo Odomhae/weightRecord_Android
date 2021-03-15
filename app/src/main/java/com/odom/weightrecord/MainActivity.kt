@@ -17,11 +17,12 @@ import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.odom.weightrecord.adapter.ListviewAdapter
 import com.odom.weightrecord.utils.ListViewItem
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
-import org.json.JSONException
 
 
 class MainActivity : AppCompatActivity() {
@@ -172,7 +173,6 @@ class MainActivity : AppCompatActivity() {
         if(txt_workoutName.text.isEmpty()){
             Toast.makeText(applicationContext, "종목값이 비었습니다", Toast.LENGTH_SHORT).show()
         }
-
         else{
             val item1 = ListViewItem()
             item1.workoutName = txt_workoutName.text.toString()
@@ -180,8 +180,8 @@ class MainActivity : AppCompatActivity() {
             item1.reps = txt_reps.text.toString()
 
             items.add(item1)
-            for(i in 0 until items.size)
-             Log.d("TAG", items[i].workoutName.toString() + " "+ items[i].weight.toString())
+            //for(i in 0 until items.size)
+            // Log.d("TAG", items[i].workoutName.toString() + " "+ items[i].weight.toString())
 
             // 배열로 저장
             setStringArrayPref("listData", items)
@@ -198,23 +198,13 @@ class MainActivity : AppCompatActivity() {
     // JSON 배열로 저장
     fun setStringArrayPref(key: String, values: ArrayList<ListViewItem>) {
 
+        val gson = Gson()
+        val json = gson.toJson(values)
         val prefs = getSharedPreferences("SETTINGS", Context.MODE_PRIVATE)
         val editor = prefs.edit()
-        val a = JSONArray()
 
-        for (i in 0 until values.size) {
-            a.put(values[i])
-        }
-
-        if (values.isNotEmpty()) {
-            editor.putString(key, a.toString())
-
-        } else {
-            editor.putString(key, null)
-        }
-
+        editor.putString(key, json)
         editor.apply()
     }
-
 
 }
