@@ -13,16 +13,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/black"
+            android:background="@android:color/holo_orange_light"
             android:orientation="horizontal"
             android:layout_weight="0">
 
-            <Button
-                android:id="@+id/button2"
+            <ImageButton
+                android:id="@+id/bt_close"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="30dp"
-                android:text="닫기" />
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/ic_baseline_arrow_back_ios_24" />
 
             <Button
                 android:id="@+id/bt_share"
@@ -49,10 +51,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <ListView
-                android:id="@+id/listView_img"
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_gravity="center"
+                android:id="@+id/recyclerView_img"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
         </FrameLayout>
 

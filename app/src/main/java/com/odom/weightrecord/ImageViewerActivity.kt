@@ -7,9 +7,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import com.odom.weightrecord.adapter.RecyclerviewAdapter
 import com.odom.weightrecord.utils.ListViewItem
 import com.odom.weightrecord.utils.WeightRecordUtil.setLocalImage
 import kotlinx.android.synthetic.main.activity_image_viewer.*
@@ -18,34 +20,26 @@ import java.io.Serializable
 
 
 class ImageViewerActivity : AppCompatActivity() {
+
+    // 운동 리스트뷰 데이터
+    val workoutItems = ArrayList<ListViewItem>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_image_viewer)
 
         setLayoutActivity()
-
-        // 기록 리스트 가져오기
-        val workoutData = getStringArrayPref("listData")
-        if(workoutData.size > 0){
-            for(i in 0 until workoutData.size)
-                Log.d("TAG", workoutData[i].workoutName.toString())
-
-        }
-
     }
 
     fun setLayoutActivity(){
 
         val file: Serializable? = intent.getSerializableExtra("fileName")
-//        val listViewImag = intent.extras!!.get("listViewImg") as Bitmap
 
         Log.d("TAG1", file.toString())
-        //      Log.d("TAG2", listViewImag.toString())
         imgProfile.setLocalImage(file as File, imgProfile)
-        //displayImage(this, (file as File).path, imgProfile)
 
-        button2.setOnClickListener { finish() }
+        bt_close.setOnClickListener { finish() }
 
         bt_save.setOnClickListener {  }
 
@@ -61,6 +55,17 @@ class ImageViewerActivity : AppCompatActivity() {
             //    startActivity(intent)
             //}
         }
+
+        // 기록 리스트 가져오기
+        val listPref = getStringArrayPref("listData")
+        if(listPref.size > 0){
+            for(value in listPref){
+                workoutItems.add(value)
+            }
+        }
+
+        recyclerView_img.adapter = RecyclerviewAdapter(listPref)
+        recyclerView_img.layoutManager = LinearLayoutManager(this)
 
     }
 
