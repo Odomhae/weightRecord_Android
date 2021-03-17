@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
@@ -30,9 +31,11 @@ class ImageViewerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_image_viewer)
 
         setLayoutActivity()
+
+        setRecyclerview()
     }
 
-    fun setLayoutActivity(){
+    private fun setLayoutActivity(){
 
         val file: Serializable? = intent.getSerializableExtra("fileName")
 
@@ -56,6 +59,10 @@ class ImageViewerActivity : AppCompatActivity() {
             //}
         }
 
+    }
+
+    private fun setRecyclerview() {
+
         // 기록 리스트 가져오기
         val listPref = getStringArrayPref("listData")
         if(listPref.size > 0){
@@ -67,10 +74,14 @@ class ImageViewerActivity : AppCompatActivity() {
         recyclerView_img.adapter = RecyclerviewAdapter(listPref)
         recyclerView_img.layoutManager = LinearLayoutManager(this)
 
+        recyclerView_img.setOnClickListener {
+            Toast.makeText(applicationContext, "일단",Toast.LENGTH_SHORT).show()
+            Log.d("TAG", "리사이클러뷰 클릭")
+        }
     }
 
     // 저장된 배열 받아옴
-    fun getStringArrayPref(key: String): ArrayList<ListViewItem> {
+    private fun getStringArrayPref(key: String): ArrayList<ListViewItem> {
 
         val prefs = getSharedPreferences("SETTINGS", Context.MODE_PRIVATE)
         val json = prefs.getString(key, null)
