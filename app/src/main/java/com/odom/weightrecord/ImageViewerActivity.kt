@@ -1,16 +1,18 @@
 package com.odom.weightrecord
 
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
+import android.view.MotionEvent
+import android.view.ScaleGestureDetector
+import android.view.ScaleGestureDetector.SimpleOnScaleGestureListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.odom.weightrecord.adapter.RecyclerviewAdapter
 import com.odom.weightrecord.utils.ListViewItem
@@ -18,12 +20,19 @@ import com.odom.weightrecord.utils.WeightRecordUtil.setLocalImage
 import kotlinx.android.synthetic.main.activity_image_viewer.*
 import java.io.File
 import java.io.Serializable
+import kotlin.math.max
+import kotlin.math.min
 
 
 class ImageViewerActivity : AppCompatActivity() {
 
     // 운동 리스트뷰 데이터
     val workoutItems = ArrayList<ListViewItem>()
+
+    var startX = 0f
+    var startY = 0f
+    private var scaleGestureDetector: ScaleGestureDetector? = null
+    private var scaleFactor = 1.0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,15 +61,12 @@ class ImageViewerActivity : AppCompatActivity() {
 
             intent.type=("image/png")
             intent.putExtra(Intent.EXTRA_STREAM, screenshotUri)
-            startActivity(Intent.createChooser(intent, "Share image using")); // 변경가능
-
-            // if(getIntent().resolveActivity(packageManager) != null) {
-            //    startActivity(intent)
-            //}
+            startActivity(Intent.createChooser(intent, "Share image using")) // 변경가능
         }
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun setRecyclerview() {
 
         // 기록 리스트 가져오기
@@ -74,9 +80,46 @@ class ImageViewerActivity : AppCompatActivity() {
         recyclerView_img.adapter = RecyclerviewAdapter(listPref)
         recyclerView_img.layoutManager = LinearLayoutManager(this)
 
-        recyclerView_img.setOnClickListener {
-            Toast.makeText(applicationContext, "일단",Toast.LENGTH_SHORT).show()
-            Log.d("TAG", "리사이클러뷰 클릭")
+        scaleGestureDetector = ScaleGestureDetector(this, ScaleListener())
+
+        recyclerView_img.setOnTouchListener { v, event ->
+            when (event.action) {
+
+                MotionEvent.ACTION_DOWN -> {
+                    startX = event.x
+                    startY = event.y
+                }
+
+                MotionEvent.ACTION_MOVE -> {
+                    val movedX: Float = event.x - startX
+                    val movedY: Float = event.y - startY
+
+                    v.x = v.x + movedX
+                    v.y = v.y + movedY
+                }
+            }
+            true
+        }
+    }
+
+    override fun onTouchEvent(ev: MotionEvent?): Boolean {
+        // Let the ScaleGestureDetector inspect all events.
+        scaleGestureDetector?.onTouchEvent(ev)
+        return true
+    }
+
+    inner class ScaleListener : SimpleOnScaleGestureListener() {
+        override fun onScale(scaleGestureDetector: ScaleGestureDetector): Boolean {
+
+            scaleFactor *= scaleGestureDetector.scaleFactor
+
+            // 최소 0.5, 최대 2배
+            scaleFactor = max(0.5f, min(scaleFactor, 2.0f))
+
+            // 리사이클러뷰에 적용
+            recyclerView_img.scaleX = scaleFactor
+            recyclerView_img.scaleY = scaleFactor
+            return true
         }
     }
 

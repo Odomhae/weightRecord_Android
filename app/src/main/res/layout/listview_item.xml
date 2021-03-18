@@ -16,6 +16,7 @@
         android:id="@+id/item_weight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="number"
         android:layout_weight="1"
         android:background="@android:color/holo_blue_light" />
 
@@ -23,6 +24,7 @@
         android:id="@+id/item_reps"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="number"
         android:layout_weight="1"
         android:background="@android:color/holo_purple" />
 
