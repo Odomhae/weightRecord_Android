@@ -1,11 +1,17 @@
 package com.odom.weightrecord
 
 
+import android.R.attr.bitmap
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
@@ -16,10 +22,11 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.odom.weightrecord.adapter.RecyclerviewAdapter
 import com.odom.weightrecord.utils.ListViewItem
+import com.odom.weightrecord.utils.WeightRecordUtil.getImageUri
 import com.odom.weightrecord.utils.WeightRecordUtil.setLocalImage
+import com.odom.weightrecord.utils.WeightRecordUtil.viewToBitmap
 import kotlinx.android.synthetic.main.activity_image_viewer.*
-import java.io.File
-import java.io.Serializable
+import java.io.*
 import kotlin.math.max
 import kotlin.math.min
 
@@ -51,15 +58,21 @@ class ImageViewerActivity : AppCompatActivity() {
         Log.d("TAG1", file.toString())
         imgProfile.setLocalImage(file as File, imgProfile)
 
+        // 뒤로가기
         bt_close.setOnClickListener { finish() }
 
-        bt_save.setOnClickListener {  }
+        // 저장하기
+        bt_save.setOnClickListener {
 
+        }
+
+        // 공유하기
+        // 이미지 + 리사이클러뷰있는 프레임레이아웃을 공유
         bt_share.setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND)
-            val screenshotUri: Uri = Uri.parse(file.toString())
+            val screenshotUri: Uri = Uri.parse(getImageUri(this, viewToBitmap(frameLayout)).toString())
 
-            intent.type=("image/png")
+            intent.type = ("image/png")
             intent.putExtra(Intent.EXTRA_STREAM, screenshotUri)
             startActivity(Intent.createChooser(intent, "Share image using")) // 변경가능
         }
@@ -102,9 +115,11 @@ class ImageViewerActivity : AppCompatActivity() {
         }
     }
 
-    override fun onTouchEvent(ev: MotionEvent?): Boolean {
-        // Let the ScaleGestureDetector inspect all events.
-        scaleGestureDetector?.onTouchEvent(ev)
+
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+
+        scaleGestureDetector?.onTouchEvent(event)
         return true
     }
 
