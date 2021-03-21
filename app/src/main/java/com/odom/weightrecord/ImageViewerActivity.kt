@@ -55,7 +55,7 @@ class ImageViewerActivity : AppCompatActivity() {
 
         val file: Serializable? = intent.getSerializableExtra("fileName")
 
-        Log.d("TAG1", file.toString())
+        Log.d("TAG", file.toString())
         imgProfile.setLocalImage(file as File, imgProfile)
 
         // 뒤로가기
@@ -72,9 +72,9 @@ class ImageViewerActivity : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_SEND)
             val screenshotUri: Uri = Uri.parse(getImageUri(this, viewToBitmap(frameLayout)).toString())
 
-            intent.type = ("image/png")
+            intent.type = ("image/*")
             intent.putExtra(Intent.EXTRA_STREAM, screenshotUri)
-            startActivity(Intent.createChooser(intent, "Share image using")) // 변경가능
+            startActivity(Intent.createChooser(intent, "Share image"))
         }
 
     }
@@ -151,6 +151,5 @@ class ImageViewerActivity : AppCompatActivity() {
 
         return restoredData
     }
-
 
 }
