@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
-                android:hint="운동종목     " />
+                android:hint="운동종목" />
 
             <EditText
                 android:id="@+id/txt_weight"
