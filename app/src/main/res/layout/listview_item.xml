@@ -10,21 +10,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@android:color/holo_purple" />
+        android:background="@android:color/transparent" />
 
     <TextView
         android:id="@+id/item_weight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@android:color/holo_blue_light" />
+        android:background="@android:color/transparent" />
 
     <TextView
         android:id="@+id/item_reps"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@android:color/holo_purple" />
+        android:background="@android:color/transparent" />
 
 
 </LinearLayout>

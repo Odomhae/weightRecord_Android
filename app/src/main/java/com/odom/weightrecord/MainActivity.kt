@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
             setStringArrayPref("listData", items)
         }
 
-        bt_input_workout.setOnClickListener { addList() }
+        ib_input_workout.setOnClickListener { addList() }
         bt_add_image.setOnClickListener { addImg() }
     }
 
@@ -170,14 +170,14 @@ class MainActivity : AppCompatActivity() {
     private fun addList(){
 
         // 빈 입력 아니면 추가
-        if(txt_workoutName.text.isEmpty()){
+        if(et_workoutName.text.isEmpty()){
             Toast.makeText(applicationContext, "종목값이 비었습니다", Toast.LENGTH_SHORT).show()
         }
         else{
             val item1 = ListViewItem()
-            item1.workoutName = txt_workoutName.text.toString()
-            item1.weight = txt_weight.text.toString()
-            item1.reps = txt_reps.text.toString()
+            item1.workoutName = et_workoutName.text.toString()
+            item1.weight = et_weight.text.toString()
+            item1.reps = et_reps.text.toString()
 
             items.add(item1)
             //for(i in 0 until items.size)
@@ -185,9 +185,9 @@ class MainActivity : AppCompatActivity() {
 
             // 배열로 저장
             setStringArrayPref("listData", items)
-            txt_workoutName.setText("")
-            txt_weight.setText("")
-            txt_reps.setText("")
+            et_workoutName.setText("")
+            et_weight.setText("")
+            et_reps.setText("")
 
             listviewAdapter.addItem(item1.workoutName.toString(), item1.weight.toString(), item1.reps.toString())
             listviewAdapter.notifyDataSetChanged()
