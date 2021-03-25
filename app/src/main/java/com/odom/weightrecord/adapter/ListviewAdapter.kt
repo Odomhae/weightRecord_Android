@@ -33,9 +33,9 @@ class ListviewAdapter : BaseAdapter() {
         val listViewItem = listViewItemList[position]
 
         // 아이템 내 각 위젯에 데이터 반영
-        item_workoutName.setText(listViewItem.workoutName)
-        item_weight.setText(listViewItem.weight!!)
-        item_reps.setText(listViewItem.reps!!)
+        item_workoutName.text = listViewItem.workoutName
+        item_weight.text = listViewItem.weight+ "kg"
+        item_reps.text = listViewItem.reps+ "번"
 
         return view
     }

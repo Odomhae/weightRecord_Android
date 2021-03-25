@@ -22,13 +22,19 @@
             android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
+            <Spinner
+                android:id="@+id/sp_workoutPart"
+                android:layout_alignParentStart="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
             <EditText
                 android:id="@+id/et_workoutName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
+                android:layout_toRightOf="@+id/sp_workoutPart"
                 android:layout_marginEnd="20dp"
-                android:maxLength="8"
+                android:maxLength="10"
                 android:hint="운동종목" />
 
             <EditText
@@ -46,12 +52,13 @@
                 android:layout_height="match_parent"
                 android:text="Kg"
                 android:gravity="center"
+                android:textColor="@color/black"
                 android:layout_toStartOf="@id/et_reps"
                 android:textSize="20dp"/>
 
             <EditText
                 android:id="@+id/et_reps"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toStartOf="@+id/tv_reps"
@@ -64,6 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_toStartOf="@+id/ib_input_workout"
+                android:textColor="@color/black"
                 android:text="번"
                 android:gravity="center"
                 android:textSize="20dp"/>
@@ -95,6 +103,13 @@
                 android:orientation="horizontal"/>
 
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:text="총 볼륨 : "/>
 
         <LinearLayout
             android:layout_width="match_parent"
