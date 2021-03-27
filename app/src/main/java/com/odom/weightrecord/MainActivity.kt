@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             setStringArrayPref("listData", items)
         }
 
-        ib_input_workout.setOnClickListener { addList() }
+        tv_input_workout.setOnClickListener { addList() }
         bt_add_image.setOnClickListener { addImg() }
     }
 
