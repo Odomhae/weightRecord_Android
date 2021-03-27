@@ -11,10 +11,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ListView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.gson.Gson
@@ -45,7 +42,6 @@ class MainActivity : AppCompatActivity() {
         listView_workout.choiceMode = ListView.CHOICE_MODE_NONE
         
         listView_workout.setOnItemClickListener { _, _, position, _ ->
-
             dialogUpdateDelete(items, position)
             setStringArrayPref("listData", items)
         }
@@ -61,16 +57,10 @@ class MainActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK) {
 
             val file = ImagePicker.getFile(data)!!
-            val listviewImage = getBitmapFromView(listView_workout)
-
-            Log.d("TAG1",file.toString())
-           //Log.d("TAG2",listviewImage.toString())
 
             val intent = Intent(this, ImageViewerActivity::class.java)
             // 이미지 선택
             intent.putExtra("fileName", file)
-            // 리스트도 이미지로 변환해서
-        //    intent.putExtra("listViewImg", listviewImage)
             // 액티비티 실행
             startActivity(intent)
 
@@ -80,18 +70,6 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show()
         }
 
-    }
-
-    // 리스트뷰 이미지로 변환.. 근데 이미지로 변환하면 크기 조절할때 글자가 깨질듯?
-    private fun getBitmapFromView(view: View): Bitmap? {
-        val returnedBitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(returnedBitmap)
-        val bgDrawable: Drawable = view.background
-
-        bgDrawable.draw(canvas)
-
-        view.draw(canvas)
-        return returnedBitmap
     }
 
     // 알림 박스에서 항목 수정 .. 필요한 기능인가?
@@ -117,8 +95,6 @@ class MainActivity : AppCompatActivity() {
             list[position].workoutName = workoutNameText.text.toString()
             list[position].weight = weightText.text.toString()
             list[position].reps = repsText.text.toString()
-
-            Log.d("TAGGing", list[position].workoutName+ " "+ list[position].weight)
 
             setStringArrayPref("listData", list)
             listviewAdapter.updateReceiptsList(list)
@@ -180,8 +156,6 @@ class MainActivity : AppCompatActivity() {
             item1.reps = et_reps.text.toString()
 
             items.add(item1)
-            //for(i in 0 until items.size)
-            // Log.d("TAG", items[i].workoutName.toString() + " "+ items[i].weight.toString())
 
             // 배열로 저장
             setStringArrayPref("listData", items)
