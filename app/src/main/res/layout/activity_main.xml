@@ -101,15 +101,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/tv_input_workout"
+            android:layout_marginBottom="120dp"
             android:orientation="horizontal">
 
             <ListView
                 android:id="@+id/listView_workout"
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
+                android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
                 android:background="@android:color/holo_green_dark"
-                android:orientation="horizontal"/>
+                android:orientation="horizontal" />
 
         </LinearLayout>
 

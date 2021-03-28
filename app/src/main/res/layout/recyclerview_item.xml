@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/item_workoutName"
+        android:id="@+id/rv_item_workoutName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16dp"
@@ -23,19 +23,19 @@
         android:layout_alignParentEnd="true">
 
         <TextView
-            android:id="@+id/item_weight"
+            android:id="@+id/rv_item_weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16dp"
             android:textStyle="bold"
             android:gravity="right"
-            android:layout_toLeftOf="@id/item_reps"
+            android:layout_toLeftOf="@id/rv_item_reps"
             android:layout_gravity="right"
             android:textColor="@color/white"
             android:background="@android:color/transparent" />
 
         <TextView
-            android:id="@+id/item_reps"
+            android:id="@+id/rv_item_reps"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:textSize="16dp"

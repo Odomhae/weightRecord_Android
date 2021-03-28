@@ -34,7 +34,7 @@ class RecyclerviewAdapter(private var data: ArrayList<ListViewItem>):RecyclerVie
 }
 
 class MyViewHolder(view: View): RecyclerView.ViewHolder(view) {
-    var workoutName = view.item_workoutName
-    var weight = view.item_weight
-    var reps = view.item_reps
+    var workoutName = view.rv_item_workoutName
+    var weight = view.rv_item_weight
+    var reps = view.rv_item_reps
 }

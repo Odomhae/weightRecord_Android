@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -81,10 +82,12 @@ class MainActivity : AppCompatActivity() {
 
         val bt1 = mDialogView.findViewById(R.id.bt_done) as Button
         val bt2 = mDialogView.findViewById(R.id.bt_delete) as Button
-        val workoutNameText = mDialogView.findViewById(R.id.txt_workoutName) as EditText
-        val weightText = mDialogView.findViewById(R.id.txt_weight) as EditText
-        val repsText = mDialogView.findViewById(R.id.txt_reps) as EditText
+        val workoutPartText = mDialogView.findViewById(R.id.et_workoutPart_update) as EditText
+        val workoutNameText = mDialogView.findViewById(R.id.et_workoutName_update) as EditText
+        val weightText = mDialogView.findViewById(R.id.et_weight_update) as EditText
+        val repsText = mDialogView.findViewById(R.id.et_reps_update) as EditText
 
+        workoutPartText.setText(list[position].workoutPart)
         workoutNameText.setText(list[position].workoutName)
         weightText.setText(list[position].weight)
         repsText.setText(list[position].reps)
@@ -92,6 +95,7 @@ class MainActivity : AppCompatActivity() {
         val mAlertDialog = mBuilder.show()
         // 수정
         bt1.setOnClickListener {
+            list[position].workoutPart = workoutPartText.text.toString()
             list[position].workoutName = workoutNameText.text.toString()
             list[position].weight = weightText.text.toString()
             list[position].reps = repsText.text.toString()
@@ -151,6 +155,7 @@ class MainActivity : AppCompatActivity() {
         }
         else{
             val item1 = ListViewItem()
+            item1.workoutPart = sp_workoutPart.selectedItem.toString()
             item1.workoutName = et_workoutName.text.toString()
             item1.weight = et_weight.text.toString()
             item1.reps = et_reps.text.toString()
@@ -163,7 +168,9 @@ class MainActivity : AppCompatActivity() {
             et_weight.setText("")
             et_reps.setText("")
 
-            listviewAdapter.addItem(item1.workoutName.toString(), item1.weight.toString(), item1.reps.toString())
+            // 운동 부위, 종목, 무게, 횟수
+            listviewAdapter.addItem(item1.workoutPart.toString(),  item1.workoutName.toString(),
+                    item1.weight.toString(), item1.reps.toString())
             listviewAdapter.notifyDataSetChanged()
         }
     }

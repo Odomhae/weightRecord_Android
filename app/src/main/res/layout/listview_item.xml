@@ -5,31 +5,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/item_workoutName"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:layout_weight="1"
-        android:background="@android:color/transparent" />
+        android:orientation="horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp">
 
-    <TextView
-        android:id="@+id/item_weight"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:textAlignment="viewEnd"
-        android:layout_weight="1"
-        android:background="@android:color/transparent" />
+        <TextView
+            android:id="@+id/lv_item_workoutPart"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent" />
 
-    <TextView
-        android:id="@+id/item_reps"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:textAlignment="viewEnd"
-        android:layout_weight="1"
-        android:background="@android:color/transparent" />
+        <TextView
+            android:id="@+id/lv_item_workoutName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent" />
+
+        <TextView
+            android:id="@+id/lv_item_weight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:textAlignment="viewEnd"
+            android:layout_weight="1"
+            android:background="@android:color/transparent" />
+
+        <TextView
+            android:id="@+id/lv_item_reps"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:textAlignment="viewEnd"
+            android:layout_weight="1"
+            android:background="@android:color/transparent" />
+
+
+    </LinearLayout>
+
+
 
 
 </LinearLayout>
