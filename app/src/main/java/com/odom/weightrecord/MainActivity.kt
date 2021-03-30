@@ -29,6 +29,8 @@ class MainActivity : AppCompatActivity() {
     val items = ArrayList<ListViewItem>()
     var listviewAdapter = ListviewAdapter()
 
+    var totalVolume = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -92,6 +94,8 @@ class MainActivity : AppCompatActivity() {
         weightText.setText(list[position].weight)
         repsText.setText(list[position].reps)
 
+        val weight1 = list[position].weight!!.toInt() * list[position].reps!!.toInt()
+
         val mAlertDialog = mBuilder.show()
         // 수정
         bt1.setOnClickListener {
@@ -99,6 +103,10 @@ class MainActivity : AppCompatActivity() {
             list[position].workoutName = workoutNameText.text.toString()
             list[position].weight = weightText.text.toString()
             list[position].reps = repsText.text.toString()
+
+            val weightUpdate = list[position].weight!!.toInt() * list[position].reps!!.toInt()
+            totalVolume += (-weight1 + weightUpdate)
+            tv_weight_volume.text = "총 볼륨 : ${totalVolume}"
 
             setStringArrayPref("listData", list)
             listviewAdapter.updateReceiptsList(list)
@@ -115,6 +123,10 @@ class MainActivity : AppCompatActivity() {
             builder.setTitle("삭제합니다")
                     .setPositiveButton("ok"
                     ) { _, _ ->
+                        val weight3 = list[position].weight!!.toInt()*list[position].reps!!.toInt()
+                        totalVolume -= weight3
+                        tv_weight_volume.text = "총 볼륨 : ${totalVolume}"
+
                         list.removeAt(position)
                         listviewAdapter.updateReceiptsList(list)
 
@@ -172,6 +184,9 @@ class MainActivity : AppCompatActivity() {
             listviewAdapter.addItem(item1.workoutPart.toString(),  item1.workoutName.toString(),
                     item1.weight.toString(), item1.reps.toString())
             listviewAdapter.notifyDataSetChanged()
+
+            totalVolume += item1.weight!!.toInt() * item1.reps!!.toInt()
+            tv_weight_volume.text = "총 볼륨 : ${totalVolume}"
         }
     }
 
