@@ -21,11 +21,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.odom.weightrecord.adapter.RecyclerviewAdapter
+import com.odom.weightrecord.adapter.RecyclerviewAdapter_black
 import com.odom.weightrecord.utils.ListViewItem
 import com.odom.weightrecord.utils.WeightRecordUtil.getImageUri
 import com.odom.weightrecord.utils.WeightRecordUtil.setLocalImage
 import com.odom.weightrecord.utils.WeightRecordUtil.viewToBitmap
 import kotlinx.android.synthetic.main.activity_image_viewer.*
+import kotlinx.android.synthetic.main.recyclerview_item.*
 import java.io.*
 import kotlin.math.max
 import kotlin.math.min
@@ -35,6 +37,9 @@ class ImageViewerActivity : AppCompatActivity() {
 
     // 운동 리스트뷰 데이터
     val workoutItems = ArrayList<ListViewItem>()
+
+    var listPref = ArrayList<ListViewItem>()
+
 
     var startX = 0f
     var startY = 0f
@@ -46,9 +51,23 @@ class ImageViewerActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_image_viewer)
 
+        getData()
+
         setLayoutActivity()
 
         setRecyclerview()
+    }
+
+    private fun getData(){
+
+        // 기록 리스트 가져오기
+        listPref = getStringArrayPref("listData")
+        if(listPref.size > 0){
+            for(value in listPref){
+                workoutItems.add(value)
+            }
+        }
+
     }
 
     private fun setLayoutActivity(){
@@ -77,18 +96,32 @@ class ImageViewerActivity : AppCompatActivity() {
             startActivity(Intent.createChooser(intent, "Share image"))
         }
 
+        var cntClicked =0
+        bt_txtColor.setOnClickListener {
+            cntClicked++
+            if(cntClicked %2 == 1){
+                recyclerView_img.adapter = RecyclerviewAdapter_black(listPref)
+                recyclerView_img.layoutManager = LinearLayoutManager(this)
+//                rv_item_workoutName.setTextColor(resources.getColor(R.color.black))
+         //       rv_item_weight.setTextColor(resources.getColor(R.color.black))
+         //       rv_item_reps.setTextColor(resources.getColor(R.color.black))
+
+            }else{
+                recyclerView_img.adapter = RecyclerviewAdapter(listPref)
+                recyclerView_img.layoutManager = LinearLayoutManager(this)
+           //     rv_item_workoutName.setTextColor(resources.getColor(R.color.white))
+           //     rv_item_weight.setTextColor(resources.getColor(R.color.white))
+           //     rv_item_reps.setTextColor(resources.getColor(R.color.white))
+
+            }
+
+
+        }
+
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setRecyclerview() {
-
-        // 기록 리스트 가져오기
-        val listPref = getStringArrayPref("listData")
-        if(listPref.size > 0){
-            for(value in listPref){
-                workoutItems.add(value)
-            }
-        }
 
         recyclerView_img.adapter = RecyclerviewAdapter(listPref)
         recyclerView_img.layoutManager = LinearLayoutManager(this)
