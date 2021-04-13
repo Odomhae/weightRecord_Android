@@ -134,7 +134,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
-                android:text="이미지 추가"
+                android:text="기록 저장 및 이미지 추가"
                 android:layout_marginLeft="10dp" />
 
         </LinearLayout>

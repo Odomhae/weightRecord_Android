@@ -19,6 +19,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.odom.weightrecord.adapter.ListviewAdapter
 import com.odom.weightrecord.utils.ListViewItem
+import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
 
@@ -30,6 +31,8 @@ class MainActivity : AppCompatActivity() {
     var listviewAdapter = ListviewAdapter()
 
     var totalVolume = 0
+
+    val realm = Realm.getDefaultInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +53,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         tv_input_workout.setOnClickListener { addList() }
-        bt_add_image.setOnClickListener { addImg() }
+        bt_add_image.setOnClickListener {
+
+            // 기록 db에 저장
+            
+
+            // 사진추가
+            addImg()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
