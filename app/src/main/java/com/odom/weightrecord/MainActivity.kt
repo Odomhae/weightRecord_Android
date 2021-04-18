@@ -4,24 +4,24 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.odom.weightrecord.adapter.ListviewAdapter
+import com.odom.weightrecord.realm.volumeRecord
 import com.odom.weightrecord.utils.ListViewItem
-import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_main.*
-import org.json.JSONArray
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,7 +32,13 @@ class MainActivity : AppCompatActivity() {
 
     var totalVolume = 0
 
-    val realm = Realm.getDefaultInstance()
+    var vArm:Int = 0
+    var vBack:Int = 0
+    var vChest:Int = 0
+    var vShoulder:Int = 0
+    var vLeg :Int = 0
+
+//    val realm = Realm.getDefaultInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +62,32 @@ class MainActivity : AppCompatActivity() {
         bt_add_image.setOnClickListener {
 
             // 기록 db에 저장
-            
+            val record = volumeRecord()
+
+            // 오늘 날짜 -> 년 /월 /일 형식
+            val new_format = SimpleDateFormat("yyyy-MM-dd")
+            val date = new_format.format(Calendar.getInstance().time)
+            // 이걸 string으로 저장해도 되나
+            // 나중에 달력에 이거 기반으로 표시될텐데..
+            Log.d("==== 오늘 날짜 ",date.toString())
+            record.date = date
+
+            // 부위별 볼륨
+            record.vArm = vArm
+            record.vBack = vBack
+            record.vChest = vChest
+            record.vShoulder = vShoulder
+            record.vLeg = vLeg
+            record.vUpperBody = record.calUpper()
+            record.vLowerBody = record.calLower()
+            record.vTotal = record.calTotal()
+
+            // 운동 기록
+           // record.workouts = items
+
+//            realm.beginTransaction()
+//            realm.copyToRealm(record)
+//            realm.commitTransaction()
 
             // 사진추가
             addImg()
@@ -79,14 +110,12 @@ class MainActivity : AppCompatActivity() {
 
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show()
         }
 
     }
 
     // 알림 박스에서 항목 수정 .. 필요한 기능인가?
-    private fun dialogUpdateDelete(list :ArrayList<ListViewItem>, position :Int) {
+    private fun dialogUpdateDelete(list: ArrayList<ListViewItem>, position: Int) {
 
         val mDialogView = LayoutInflater.from(this).inflate(R.layout.listview_update, null)
         val mBuilder = AlertDialog.Builder(this)
@@ -131,7 +160,8 @@ class MainActivity : AppCompatActivity() {
             val builder = AlertDialog.Builder(this@MainActivity)
 
             builder.setTitle("삭제합니다")
-                    .setPositiveButton("ok"
+                    .setPositiveButton(
+                        "ok"
                     ) { _, _ ->
                         val weight3 = list[position].weight!!.toInt()*list[position].reps!!.toInt()
                         totalVolume -= weight3
@@ -142,7 +172,8 @@ class MainActivity : AppCompatActivity() {
 
                         mAlertDialog.dismiss()
                     }
-                    .setNegativeButton("cancel"
+                    .setNegativeButton(
+                        "cancel"
                     ) { _, _ ->
                         mAlertDialog.dismiss()
                     }
@@ -190,10 +221,30 @@ class MainActivity : AppCompatActivity() {
             et_weight.setText("")
             et_reps.setText("")
 
-            // 운동 부위, 종목, 무게, 횟수
-            listviewAdapter.addItem(item1.workoutPart.toString(),  item1.workoutName.toString(),
-                    item1.weight.toString(), item1.reps.toString())
+            // 운동 부위, 종목, 무게, 횟수 저장
+            listviewAdapter.addItem(
+                item1.workoutPart.toString(), item1.workoutName.toString(),
+                item1.weight.toString(), item1.reps.toString()
+            )
             listviewAdapter.notifyDataSetChanged()
+
+            when(item1.workoutPart){
+                "등" -> {
+                    vBack += item1.weight!!.toInt() * item1.reps!!.toInt()
+                }
+                "가슴" -> {
+                    vChest += item1.weight!!.toInt() * item1.reps!!.toInt()
+                }
+                "팔" -> {
+                    vArm += item1.weight!!.toInt() * item1.reps!!.toInt()
+                }
+                "어깨" -> {
+                    vShoulder += item1.weight!!.toInt() * item1.reps!!.toInt()
+                }
+                "하체" -> {
+                    vLeg += item1.weight!!.toInt() * item1.reps!!.toInt()
+                }
+            }
 
             totalVolume += item1.weight!!.toInt() * item1.reps!!.toInt()
             tv_weight_volume.text = "총 볼륨 : ${totalVolume}"
