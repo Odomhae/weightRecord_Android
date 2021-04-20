@@ -1,6 +1,7 @@
 package com.odom.weightrecord.realm
 
 import com.odom.weightrecord.utils.ListViewItem
+import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import kotlin.collections.ArrayList
@@ -15,7 +16,8 @@ open class volumeRecord(
     var date: String?= null,
 
     //운동 기록
-  //  var workouts: ArrayList<ListViewItem> = ArrayList(),
+    //var workouts: ArrayList<ListViewItem> = ArrayList(),
+    //var workouts :RealmList<routineList> = RealmList(),
 
     // 부위별 볼륨
     var vArm:Int = 0,
@@ -48,7 +50,7 @@ open class volumeRecord(
         return vLowerBody
     }
 
-    fun calTotal():Int {
+    fun calTotal() :Int {
         vTotal = vLowerBody + vUpperBody
 
         return vTotal

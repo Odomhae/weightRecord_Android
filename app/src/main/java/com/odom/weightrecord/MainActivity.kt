@@ -16,10 +16,15 @@ import com.google.gson.Gson
 import com.odom.weightrecord.adapter.ListviewAdapter
 import com.odom.weightrecord.realm.volumeRecord
 import com.odom.weightrecord.utils.ListViewItem
+import io.realm.Realm
+import io.realm.RealmList
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import org.json.JSONObject
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -27,7 +32,7 @@ import kotlin.collections.ArrayList
 class MainActivity : AppCompatActivity() {
 
     // 리스트뷰 아이템, 리스트뷰 어댑터
-    val items = ArrayList<ListViewItem>()
+    val items = ArrayList<ListViewItem>() // RealmList<routineList>()//
     var listviewAdapter = ListviewAdapter()
 
     var totalVolume = 0
@@ -38,11 +43,14 @@ class MainActivity : AppCompatActivity() {
     var vShoulder:Int = 0
     var vLeg :Int = 0
 
-//    val realm = Realm.getDefaultInstance()
+    var realm : Realm ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        Realm.init(this)
+        realm = Realm.getDefaultInstance()
 
         // 화면 관련 설정
         setLayoutActivity()
@@ -62,7 +70,9 @@ class MainActivity : AppCompatActivity() {
         bt_add_image.setOnClickListener {
 
             // 기록 db에 저장
+            // 코루틴으로 변환 요
             val record = volumeRecord()
+            realm!!.beginTransaction()
 
             // 오늘 날짜 -> 년 /월 /일 형식
             val new_format = SimpleDateFormat("yyyy-MM-dd")
@@ -82,12 +92,15 @@ class MainActivity : AppCompatActivity() {
             record.vLowerBody = record.calLower()
             record.vTotal = record.calTotal()
 
-            // 운동 기록
+            // 운동 기록 realmlist로 해야하나 `
+            // TODO: 2021-04-20
            // record.workouts = items
 
-//            realm.beginTransaction()
-//            realm.copyToRealm(record)
-//            realm.commitTransaction()
+            // id as Primary Key
+            record.id = System.currentTimeMillis()
+
+            realm!!.copyToRealm(record)
+            realm!!.commitTransaction()
 
             // 사진추가
             addImg()
@@ -188,13 +201,6 @@ class MainActivity : AppCompatActivity() {
 
         ImagePicker.with(this)
             .crop()
-//                    .galleryMimeTypes(
-//                            mimeTypes = arrayOf(
-//                                    "image/png",
-//                                    "image/jpg",
-//                                    "image/jpeg"
-//                            )
-//                    )
             .maxResultSize(1080, 1920)
             .start()
     }
@@ -207,7 +213,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "종목값이 비었습니다", Toast.LENGTH_SHORT).show()
         }
         else{
-            val item1 = ListViewItem()
+            val item1 = ListViewItem() // routineList()//
             item1.workoutPart = sp_workoutPart.selectedItem.toString()
             item1.workoutName = et_workoutName.text.toString()
             item1.weight = et_weight.text.toString()
@@ -263,5 +269,14 @@ class MainActivity : AppCompatActivity() {
         editor.putString(key, json)
         editor.apply()
     }
+
+    // TODO: 2021-04-20  
+//    val JobSaveRecord = CoroutineScope(Dispatchers.Main).launch {
+//
+//        CoroutineScope(Dispatchers.Default).async {
+//
+//        }.await()
+//        
+//    }
 
 }
