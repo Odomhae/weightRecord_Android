@@ -1,7 +1,9 @@
 package com.odom.weightrecord.fragment
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +13,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.gson.Gson
+import com.odom.weightrecord.ImageViewerActivity
 import com.odom.weightrecord.R
 import com.odom.weightrecord.adapter.ListviewAdapter
 import com.odom.weightrecord.realm.volumeRecord
@@ -58,6 +61,27 @@ class MainFragment :Fragment() {
         setLayoutActivity()
 
         return view
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // 이미지 선택
+        if (resultCode == Activity.RESULT_OK) {
+
+            val file = ImagePicker.getFile(data)!!
+
+            val intent = Intent(requireContext(), ImageViewerActivity::class.java)
+            // 이미지 선택
+            intent.putExtra("fileName", file)
+            // 액티비티 실행
+            startActivity(intent)
+
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setLayoutActivity() {
