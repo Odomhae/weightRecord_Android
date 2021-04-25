@@ -7,138 +7,33 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <RelativeLayout
-            android:id="@+id/rLayout_input_workout"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            android:layout_alignParentTop="true"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <Spinner
-                android:id="@+id/sp_workoutPart"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="10dp"
-                android:entries="@array/array_workoutPart"
-                android:gravity="center_vertical" />
-
-            <EditText
-                android:id="@+id/et_workoutName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/sp_workoutPart"
-                android:hint="운동종목"
-                android:maxLength="10" />
-
-            <EditText
-                android:id="@+id/et_weight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toStartOf="@id/tv_kg"
-                android:hint="무게"
-                android:inputType="number"
-                android:maxLength="3" />
-
-            <TextView
-                android:id="@+id/tv_kg"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_toStartOf="@id/et_reps"
-                android:gravity="center"
-                android:text="Kg"
-                android:textColor="@color/black"
-                android:textSize="20dp" />
-
-            <EditText
-                android:id="@+id/et_reps"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_toStartOf="@+id/tv_reps"
-                android:hint="반복수"
-                android:inputType="number"
-                android:maxLength="3" />
-
-            <TextView
-                android:id="@+id/tv_reps"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="10dp"
-                android:gravity="center"
-                android:text="번"
-                android:textColor="@color/black"
-                android:textSize="20dp" />
-
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/tv_input_workout"
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:layout_below="@+id/rLayout_input_workout"
-            android:text="추가"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:background="@android:color/holo_orange_dark"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp" />
+    <ScrollView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/tv_input_workout"
-            android:layout_marginBottom="120dp"
-            android:orientation="horizontal">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <ListView
-                android:id="@+id/listView_workout"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
-                android:background="@android:color/holo_green_dark"
-                android:orientation="horizontal" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_alignParentBottom="true"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_weight_volume"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="20dp"
-                android:text="총 볼륨 : "/>
+                android:layout_height="wrap_content"
+                android:id="@+id/fLayout_fragment" />
 
             <Button
-                android:id="@+id/bt_add_image"
-                android:layout_width="wrap_content"
+                android:id="@+id/button1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="6dp"
-                android:text="기록 저장 및 이미지 추가"
-                android:layout_marginLeft="10dp" />
+                android:text="Switch Fragment"
+                android:textSize="20sp" />
 
         </LinearLayout>
 
-    </RelativeLayout>
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
