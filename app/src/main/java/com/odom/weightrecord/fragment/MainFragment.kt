@@ -39,7 +39,7 @@ class MainFragment :Fragment() {
     var vShoulder:Int = 0
     var vLeg :Int = 0
 
-    var realm : Realm?= null
+    val realm = Realm.getDefaultInstance()
 
     var listView_workout : ListView ?= null
     var tv_input_workout : TextView ?= null
@@ -54,8 +54,6 @@ class MainFragment :Fragment() {
         tv_input_workout =  view.findViewById<View>(R.id.tv_input_workout) as TextView
         bt_add_image = view.findViewById(R.id.bt_add_image) as Button
 
-        Realm.init(requireContext())
-        realm = Realm.getDefaultInstance()
 
         // 화면 관련 설정
         setLayoutActivity()
