@@ -96,41 +96,44 @@ class MainFragment :Fragment() {
         bt_add_image!!.setOnClickListener {
 
             // 기록 db에 저장
-            // 코루틴으로 변환 요
-            val record = volumeRecord()
-            realm!!.beginTransaction()
-
-            // 오늘 날짜 -> 년 /월 /일 형식
-            val new_format = SimpleDateFormat("yyyy-MM-dd")
-            val date = new_format.format(Calendar.getInstance().time)
-            // 이걸 string으로 저장해도 되나
-            // 나중에 달력에 이거 기반으로 표시될텐데..
-            Log.d("==== 오늘 날짜 ", date.toString())
-            record.date = date
-
-            // 부위별 볼륨
-            record.vArm = vArm
-            record.vBack = vBack
-            record.vChest = vChest
-            record.vShoulder = vShoulder
-            record.vLeg = vLeg
-            record.vUpperBody = record.calUpper()
-            record.vLowerBody = record.calLower()
-            record.vTotal = record.calTotal()
-
-            // 운동 기록 realmlist로 해야하나 `
-            // TODO: 2021-04-20
-            // record.workouts = items
-
-            // id as Primary Key
-            record.id = System.currentTimeMillis()
-
-            realm!!.copyToRealm(record)
-            realm!!.commitTransaction()
+            addRecord()
 
             // 사진추가
             addImg()
         }
+    }
+
+    // 코루틴으로 변환 요?
+    private fun addRecord() {
+
+        realm!!.beginTransaction()
+        val record = realm.createObject(volumeRecord::class.java)
+        // id as Primary Key
+
+
+        // 오늘 날짜 -> 년 /월 /일 형식
+        val new_format = SimpleDateFormat("yyyy-MM-dd")
+        val date = new_format.format(Calendar.getInstance().time)
+        // 이걸 string으로 저장해도 되나
+        // 나중에 달력에 이거 기반으로 표시될텐데..
+        Log.d("==== 오늘 날짜 ", date.toString())
+        record.date = date
+
+        // 부위별 볼륨
+        record.vArm = vArm
+        record.vBack = vBack
+        record.vChest = vChest
+        record.vShoulder = vShoulder
+        record.vLeg = vLeg
+        record.vUpperBody = record.calUpper()
+        record.vLowerBody = record.calLower()
+        record.vTotal = record.calTotal()
+
+        // 운동 기록 realmlist로 해야하나 `
+        // TODO: 2021-04-20
+        // record.workouts = items
+
+        realm.commitTransaction()
     }
 
 
@@ -188,8 +191,8 @@ class MainFragment :Fragment() {
                 }
             }
 
-            totalVolume += item1.weight!!.toInt() * item1.reps!!.toInt()
-            tv_weight_volume.text = "총 볼륨 : ${totalVolume}"
+           // totalVolume += item1.weight!!.toInt() * item1.reps!!.toInt()
+           // tv_weight_volume.text = "총 볼륨 : ${totalVolume}"
         }
     }
 

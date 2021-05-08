@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="array_workoutPart">
+        <item>부위없음</item>
         <item>등</item>
         <item>가슴</item>
         <item>팔</item>

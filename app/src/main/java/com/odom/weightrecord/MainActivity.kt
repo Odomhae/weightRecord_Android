@@ -19,7 +19,7 @@ class MainActivity : FragmentActivity() {
         Realm.init(this)
 
         val vPager : ViewPager = findViewById(R.id.viewPager)
-        vPager.offscreenPageLimit = 4 ///
+        vPager.offscreenPageLimit = 2
 
         val adapter = FragmentAdapter(supportFragmentManager)
 
