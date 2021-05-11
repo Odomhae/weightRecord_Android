@@ -34,8 +34,17 @@ class ListviewAdapter : BaseAdapter() {
         // 아이템 내 각 위젯에 데이터 반영
         item_workoutPart.text = listViewItem.workoutPart
         item_workoutName.text = listViewItem.workoutName
-        item_weight.text = listViewItem.weight + "kg"
-        item_reps.text = listViewItem.reps + "번"
+
+        // 부위구별 없을때 ex)한줄 메모
+        if(listViewItem.workoutPart != "부위없음"){
+            item_weight.text = listViewItem.weight + "kg"
+            item_reps.text = listViewItem.reps + "번"
+        }else{
+            item_weight.text = listViewItem.weight
+            item_reps.text = listViewItem.reps
+        }
+
+
 
         return view
     }
