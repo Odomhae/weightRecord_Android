@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -14,14 +15,16 @@
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/button"
+        app:selectionType="single"
+
+        android:layout_above="@+id/bt_add_record"
         android:layout_below="@id/toolbar"/>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/bt_add_record"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:text="버튼" />
+        android:text="기록추가" />
 
 </RelativeLayout>
