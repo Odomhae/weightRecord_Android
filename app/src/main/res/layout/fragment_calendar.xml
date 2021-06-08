@@ -5,20 +5,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize" />
-
-    <com.applikeysolutions.cosmocalendar.view.CalendarView
+    <com.applandeo.materialcalendarview.CalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:selectionType="single"
+        android:layout_above="@+id/bt_add_record"/>
 
-        android:layout_above="@+id/bt_add_record"
-        android:layout_below="@id/toolbar"/>
+<!--    <com.applikeysolutions.cosmocalendar.view.CalendarView-->
+<!--        android:id="@+id/calendarView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:selectionType="single"-->
+<!--        android:layout_above="@+id/bt_add_record" />-->
 
     <Button
         android:id="@+id/bt_add_record"

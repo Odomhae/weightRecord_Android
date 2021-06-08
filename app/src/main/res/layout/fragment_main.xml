@@ -12,15 +12,41 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
 
+        <LinearLayout
+            android:id="@+id/rLayout_date"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="날짜 : " />
+
+            <TextView
+                android:id="@+id/tv_record_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:text="2222 / 11 / 23 " />
+
+        </LinearLayout>
+
         <RelativeLayout
             android:id="@+id/rLayout_input_workout"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            android:layout_alignParentTop="true"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/rLayout_date"
+            android:layout_alignTop="@+id/rLayout_date"
+            android:orientation="horizontal">
 
             <Spinner
                 android:id="@+id/sp_workoutPart"
@@ -119,14 +145,6 @@
             android:orientation="vertical"
             android:layout_alignParentBottom="true"
             android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_weight_volume"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="20dp"
-                android:text="총 볼륨 : "/>
 
             <Button
                 android:id="@+id/bt_add_image"
