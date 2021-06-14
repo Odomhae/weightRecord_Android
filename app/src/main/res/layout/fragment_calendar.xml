@@ -9,15 +9,8 @@
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:selectionType="single"
+        app:headerColor="@android:color/holo_orange_dark"
         android:layout_above="@+id/bt_add_record"/>
-
-<!--    <com.applikeysolutions.cosmocalendar.view.CalendarView-->
-<!--        android:id="@+id/calendarView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        app:selectionType="single"-->
-<!--        android:layout_above="@+id/bt_add_record" />-->
 
     <Button
         android:id="@+id/bt_add_record"

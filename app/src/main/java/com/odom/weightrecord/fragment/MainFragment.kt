@@ -2,10 +2,13 @@ package com.odom.weightrecord.fragment
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -107,7 +110,7 @@ class MainFragment :Fragment() {
     private fun addRecord() {
 
         realm!!.beginTransaction()
-        val record = realm.createObject(volumeRecord::class.java)
+        //val record = realm.createObject(volumeRecord::class.java)
         // id as Primary Key
 
 
@@ -117,17 +120,17 @@ class MainFragment :Fragment() {
         // 이걸 string으로 저장해도 되나
         // 나중에 달력에 이거 기반으로 표시될텐데..
         Log.d("==== 오늘 날짜 ", date.toString())
-        record.date = date
-
-        // 부위별 볼륨
-        record.vArm = vArm
-        record.vBack = vBack
-        record.vChest = vChest
-        record.vShoulder = vShoulder
-        record.vLeg = vLeg
-        record.vUpperBody = record.calUpper()
-        record.vLowerBody = record.calLower()
-        record.vTotal = record.calTotal()
+//        record.date = date
+//
+//        // 부위별 볼륨
+//        record.vArm = vArm
+//        record.vBack = vBack
+//        record.vChest = vChest
+//        record.vShoulder = vShoulder
+//        record.vLeg = vLeg
+//        record.vUpperBody = record.calUpper()
+//        record.vLowerBody = record.calLower()
+//        record.vTotal = record.calTotal()
 
         // 운동 기록 realmlist로 해야하나 `
         // TODO: 2021-04-20
@@ -139,10 +142,25 @@ class MainFragment :Fragment() {
 
     private fun addImg() {
 
-        ImagePicker.with(this)
-                .crop()
-                .maxResultSize(1080, 1920)
-                .start()
+        val items = arrayOf<CharSequence>("앨범에서 가져오기", "사진찍기")
+
+        val dialog: Dialog =
+                AlertDialog.Builder(requireContext())
+                        //.setTitle("title")
+                        .setItems(items) { _, position ->
+
+                            selectImg(position)
+                        }.create()
+        dialog.show()
+    }
+
+    private fun selectImg(position: Int) {
+
+        if (position == 0) {
+            ImagePicker.with(this).crop().galleryOnly().maxResultSize(1080, 1920).start()
+        } else if (position == 1) {
+            ImagePicker.with(this).crop().cameraOnly().start()
+        }
     }
 
     private fun addList(){
@@ -152,7 +170,7 @@ class MainFragment :Fragment() {
             Toast.makeText(requireContext(), "종목값이 비었습니다", Toast.LENGTH_SHORT).show()
         }
         else{
-            val item1 = ListViewItem() // routineList()//
+            val item1 = ListViewItem()
             item1.workoutPart = sp_workoutPart.selectedItem.toString()
             item1.workoutName = et_workoutName.text.toString()
             item1.weight = et_weight.text.toString()
@@ -269,7 +287,7 @@ class MainFragment :Fragment() {
 
         val gson = Gson()
         val json = gson.toJson(values)
-        val prefs = this.activity!!.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE)
+        val prefs = requireActivity().getSharedPreferences("SETTINGS", Context.MODE_PRIVATE)
         val editor = prefs.edit()
 
         editor.putString(key, json)
