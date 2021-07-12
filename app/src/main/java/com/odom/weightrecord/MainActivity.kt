@@ -23,7 +23,7 @@ class MainActivity : FragmentActivity() {
 
         val adapter = FragmentAdapter(supportFragmentManager)
 
-        adapter.addItem(CalendarFragment())
+       // adapter.addItem(CalendarFragment())
         adapter.addItem(MainFragment())
 
         vPager.adapter = adapter
