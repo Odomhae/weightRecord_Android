@@ -58,31 +58,26 @@ class ListFragment : Fragment() {
 
     private fun addList(){
 
-        // 빈 입력 아니면 추가
-        if(et_workoutName.text.isEmpty()){
-            Toast.makeText(requireContext(), "종목값이 비었습니다", Toast.LENGTH_SHORT).show()
-        }
-        else{
-            val item1 = ListViewItem()
-            item1.workoutName = et_workoutName.text.toString()
-            item1.weight = et_weight.text.toString()
-            item1.reps = et_reps.text.toString()
+        val item1 = ListViewItem()
+        item1.workoutName = et_workoutName.text.toString()
+        item1.weight = et_weight.text.toString()
+        item1.reps = et_reps.text.toString()
 
-            items.add(item1)
+        items.add(item1)
 
-            // 배열로 저장
-            setStringArrayPref("listData", items)
-            et_workoutName.setText("")
-            et_weight.setText("")
-            et_reps.setText("")
+        // 배열로 저장
+        setStringArrayPref("listData", items)
+        et_workoutName.setText("")
+        et_weight.setText("")
+        et_reps.setText("")
 
-            // 운동 부위, 종목, 무게, 횟수 저장
-            listviewAdapter.addItem(
+        // 운동 부위, 종목, 무게, 횟수 저장
+        listviewAdapter.addItem(
                 item1.workoutPart.toString(), item1.workoutName.toString(),
                 item1.weight.toString(), item1.reps.toString()
-            )
-            listviewAdapter.notifyDataSetChanged()
-        }
+        )
+        listviewAdapter.notifyDataSetChanged()
+
     }
 
     private fun dialogUpdateDelete(list: ArrayList<ListViewItem>, position: Int) {
@@ -125,17 +120,13 @@ class ListFragment : Fragment() {
 
             builder.setTitle("삭제합니다")
                 .setPositiveButton(
-                    "ok"
-                ) { _, _ ->
-
+                    "확인") { _, _ ->
                     list.removeAt(position)
                     listviewAdapter.updateReceiptsList(list)
-
                     mAlertDialog.dismiss()
                 }
                 .setNegativeButton(
-                    "cancel"
-                ) { _, _ ->
+                    "취소") { _, _ ->
                     mAlertDialog.dismiss()
                 }
 

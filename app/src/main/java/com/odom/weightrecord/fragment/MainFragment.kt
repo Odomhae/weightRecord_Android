@@ -3,12 +3,8 @@ package com.odom.weightrecord.fragment
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,17 +14,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.github.dhaval2404.imagepicker.ImagePicker
-import com.google.gson.Gson
 import com.odom.weightrecord.ImageViewerActivity
 import com.odom.weightrecord.R
-import com.odom.weightrecord.adapter.ListviewAdapter
-import com.odom.weightrecord.realm.volumeRecord
-import com.odom.weightrecord.utils.ListViewItem
-import io.realm.Realm
-import kotlinx.android.synthetic.main.fragment_main.*
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 class MainFragment :Fragment() {
@@ -55,7 +42,6 @@ class MainFragment :Fragment() {
         rlayout_tab_list = rootView.findViewById(R.id.rlayout_tab_list) as RelativeLayout
         bt_add_image = rootView.findViewById(R.id.bt_add_image) as Button
 
-        //
         fragmentLetter = LetterFragment.newInstance()
         fragmentImg = ImgFragment.newInstance()
         fragmentList = ListFragment.newInstance()
@@ -108,16 +94,10 @@ class MainFragment :Fragment() {
 
     private fun setLayoutTab(nPosition: Int) {
 
-        // 눌린 곳은 체크 아닌곳은 체크 해제
+        // 눌린 곳만 체크
         rlayout_tab_letter!!.isSelected = (nPosition == 0)
         rlayout_tab_img!!.isSelected = (nPosition == 1)
         rlayout_tab_list!!.isSelected = (nPosition == 2)
-
-//        when (nPosition) {
-//            0 -> rlayout_tab_letter!!.isSelected = true
-//            1 -> rlayout_tab_img!!.isSelected = true
-//            2 -> rlayout_tab_list!!.isSelected = true
-//        }
     }
 
     private fun addImg() {
@@ -126,9 +106,7 @@ class MainFragment :Fragment() {
 
         val dialog: Dialog =
             AlertDialog.Builder(requireContext())
-                //.setTitle("title")
                 .setItems(items) { _, position ->
-
                     selectImg(position)
                 }.create()
         dialog.show()
@@ -147,7 +125,6 @@ class MainFragment :Fragment() {
         FragmentPagerAdapter(fragmentManager) {
 
         override fun getItem(position: Int): Fragment {
-            Log.d("===item" , position.toString())
             return arrFragments[position]!!
         }
 
