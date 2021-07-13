@@ -171,7 +171,6 @@ class MainFragment :Fragment() {
         }
         else{
             val item1 = ListViewItem()
-            item1.workoutPart = sp_workoutPart.selectedItem.toString()
             item1.workoutName = et_workoutName.text.toString()
             item1.weight = et_weight.text.toString()
             item1.reps = et_reps.text.toString()
