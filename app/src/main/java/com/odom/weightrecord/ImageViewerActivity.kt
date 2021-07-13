@@ -1,17 +1,11 @@
 package com.odom.weightrecord
 
 
-import android.R.attr.bitmap
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.util.Log
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
@@ -27,7 +21,6 @@ import com.odom.weightrecord.utils.WeightRecordUtil.getImageUri
 import com.odom.weightrecord.utils.WeightRecordUtil.setLocalImage
 import com.odom.weightrecord.utils.WeightRecordUtil.viewToBitmap
 import kotlinx.android.synthetic.main.activity_image_viewer.*
-import kotlinx.android.synthetic.main.recyclerview_item.*
 import java.io.*
 import kotlin.math.max
 import kotlin.math.min
@@ -40,7 +33,6 @@ class ImageViewerActivity : AppCompatActivity() {
 
     var listPref = ArrayList<ListViewItem>()
 
-
     var startX = 0f
     var startY = 0f
     private var scaleGestureDetector: ScaleGestureDetector? = null
@@ -50,11 +42,8 @@ class ImageViewerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_image_viewer)
-
         getData()
-
         setLayoutActivity()
-
         setRecyclerview()
     }
 
@@ -79,7 +68,6 @@ class ImageViewerActivity : AppCompatActivity() {
 
         // 뒤로가기
         bt_close.setOnClickListener { finish() }
-
         // 저장하기
         bt_save.setOnClickListener {
 
@@ -102,19 +90,12 @@ class ImageViewerActivity : AppCompatActivity() {
             if(cntClicked %2 == 1){
                 recyclerView_img.adapter = RecyclerviewAdapter_black(listPref)
                 recyclerView_img.layoutManager = LinearLayoutManager(this)
-//                rv_item_workoutName.setTextColor(resources.getColor(R.color.black))
-         //       rv_item_weight.setTextColor(resources.getColor(R.color.black))
-         //       rv_item_reps.setTextColor(resources.getColor(R.color.black))
 
             }else{
                 recyclerView_img.adapter = RecyclerviewAdapter(listPref)
                 recyclerView_img.layoutManager = LinearLayoutManager(this)
-           //     rv_item_workoutName.setTextColor(resources.getColor(R.color.white))
-           //     rv_item_weight.setTextColor(resources.getColor(R.color.white))
-           //     rv_item_reps.setTextColor(resources.getColor(R.color.white))
 
             }
-
 
         }
 

@@ -1,202 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <RelativeLayout
+    <!-- 탭 메뉴 영역 -->
+    <LinearLayout
+        android:id="@+id/llayout_tab"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <!-- 탭 메뉴 영역 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal"
-            android:background="@android:color/darker_gray">
-
-            <RelativeLayout
-                android:id="@+id/course_rlayout_tab_best"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/course_tv_tab_best"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="글"
-                    android:textSize="12sp"
-                    android:textColor="@drawable/selector_common_color_txt_tab"/>
-
-                <ImageView
-                    android:id="@+id/course_iv_tab_line_bottom_best"
-                    android:layout_width="match_parent"
-                    android:layout_height="2.6dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="@drawable/selector_common_color_tab_line_bottom"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/course_rlayout_tab_new"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/course_tv_tab_new"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="사진"
-                    android:textColor="@drawable/selector_common_color_txt_tab"
-                    android:textSize="12sp" />
-
-                <ImageView
-                    android:id="@+id/course_iv_tab_line_bottom_new"
-                    android:layout_width="match_parent"
-                    android:layout_height="2.6dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="@drawable/selector_common_color_tab_line_bottom"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/course_rlayout_tab_around"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/course_tv_tab_around"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="표"
-                    android:textSize="12sp"
-                    android:textColor="@drawable/selector_common_color_txt_tab"/>
-
-                <ImageView
-                    android:id="@+id/course_iv_tab_line_bottom_around"
-                    android:layout_width="match_parent"
-                    android:layout_height="2.6dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="@drawable/selector_common_color_tab_line_bottom"/>
-
-            </RelativeLayout>
-
-        </LinearLayout>
+        android:layout_alignParentTop="true"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:background="#505050">
 
         <RelativeLayout
-            android:id="@+id/rLayout_input_workout"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="30dp"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/et_workoutName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:hint="운동종목"
-                android:maxLength="10" />
-
-            <EditText
-                android:id="@+id/et_weight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toStartOf="@id/tv_kg"
-                android:hint="무게"
-                android:inputType="number"
-                android:maxLength="3" />
+            android:id="@+id/rlayout_tab_letter"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
             <TextView
-                android:id="@+id/tv_kg"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_tab_letter"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toStartOf="@id/et_reps"
                 android:gravity="center"
-                android:text="Kg"
-                android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:text="글"
+                android:textSize="12sp"
+                android:textColor="@drawable/selector_txt_tab"/>
 
-            <EditText
-                android:id="@+id/et_reps"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_toStartOf="@+id/tv_reps"
-                android:hint="반복수"
-                android:inputType="number"
-                android:maxLength="3" />
-
-            <TextView
-                android:id="@+id/tv_reps"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="10dp"
-                android:gravity="center"
-                android:text="번"
-                android:textColor="@color/black"
-                android:textSize="20dp" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="2.6dp"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/selector_bottom_line_tab"/>
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tv_input_workout"
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:layout_below="@+id/rLayout_input_workout"
-            android:text="추가"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:background="@android:color/holo_orange_dark"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp" />
+        <RelativeLayout
+            android:id="@+id/rlayout_tab_img"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-        <LinearLayout
+            <TextView
+                android:id="@+id/tv_tab_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="사진"
+                android:textColor="@drawable/selector_txt_tab"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="2.6dp"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/selector_bottom_line_tab"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlayout_tab_list"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_tab_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="리스트"
+                android:textSize="12sp"
+                android:textColor="@drawable/selector_txt_tab"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="2.6dp"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/selector_bottom_line_tab"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <!-- 뷰페이저 영역 -->
+    <LinearLayout
+        android:layout_below="@+id/llayout_tab"
+        android:layout_above="@+id/llayout_share"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/tv_input_workout"
-            android:layout_marginBottom="120dp"
-            android:orientation="horizontal">
+            android:overScrollMode="never" />
 
-            <ListView
-                android:id="@+id/listView_workout"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="20dp"
-                android:background="@android:color/holo_green_dark"
-                android:orientation="horizontal" />
+    </LinearLayout>
 
-        </LinearLayout>
+    <!-- 이미지 공유 버튼 -->
+    <LinearLayout
+        android:id="@+id/llayout_share"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_alignParentBottom="true"
-            android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/bt_add_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:text="기록 저장 및 이미지 추가"
+            android:layout_gravity="center" />
 
-            <Button
-                android:id="@+id/bt_add_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="6dp"
-                android:text="기록 저장 및 이미지 추가"
-                android:layout_marginLeft="10dp" />
+    </LinearLayout>
 
-        </LinearLayout>
-
-    </RelativeLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

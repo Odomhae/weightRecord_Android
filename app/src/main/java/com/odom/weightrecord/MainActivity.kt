@@ -16,8 +16,6 @@ class MainActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Realm.init(this)
-
         val vPager : ViewPager = findViewById(R.id.viewPager)
         vPager.offscreenPageLimit = 2
 
