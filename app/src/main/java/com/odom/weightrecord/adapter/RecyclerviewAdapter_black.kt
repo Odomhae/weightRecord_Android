@@ -24,14 +24,6 @@ class RecyclerviewAdapter_black(private var data: ArrayList<ListViewItem>):Recyc
 
         holder.workoutName.text = data[position].workoutName
 
-        if(data[position].workoutPart != "부위없음"){
-            holder.weight.text = data[position].weight + "kg"
-            holder.reps.text = data[position].reps + "번"
-        }else{
-            holder.weight.text = data[position].weight
-            holder.reps.text = data[position].reps
-        }
-
         // 폭 설정
         val layoutParams = holder.itemView.layoutParams
         layoutParams.height = 80

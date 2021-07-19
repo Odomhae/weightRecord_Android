@@ -22,48 +22,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:hint="운동종목"
-                android:maxLength="10" />
-
-            <EditText
-                android:id="@+id/et_weight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toStartOf="@id/tv_kg"
-                android:hint="무게"
-                android:inputType="number"
-                android:maxLength="3" />
-
-            <TextView
-                android:id="@+id/tv_kg"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_toStartOf="@id/et_reps"
-                android:gravity="center"
-                android:text="Kg"
-                android:textColor="@color/black"
-                android:textSize="20dp" />
-
-            <EditText
-                android:id="@+id/et_reps"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_toStartOf="@+id/tv_reps"
-                android:hint="반복수"
-                android:inputType="number"
-                android:maxLength="3" />
-
-            <TextView
-                android:id="@+id/tv_reps"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="10dp"
-                android:gravity="center"
-                android:text="번"
-                android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:layout_marginStart="-2dp"
+                android:layout_marginEnd="2dp"
+                android:hint="입력하세요." />
 
         </RelativeLayout>
 

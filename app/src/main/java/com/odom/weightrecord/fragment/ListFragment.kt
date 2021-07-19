@@ -60,16 +60,12 @@ class ListFragment : Fragment() {
 
         val item1 = ListViewItem()
         item1.workoutName = et_workoutName.text.toString()
-        item1.weight = et_weight.text.toString()
-        item1.reps = et_reps.text.toString()
 
         items.add(item1)
 
         // 배열로 저장
         setStringArrayPref("listData", items)
         et_workoutName.setText("")
-        et_weight.setText("")
-        et_reps.setText("")
 
         // 운동 부위, 종목, 무게, 횟수 저장
         listviewAdapter.addItem(
@@ -88,23 +84,15 @@ class ListFragment : Fragment() {
 
         val bt1 = mDialogView.findViewById(R.id.bt_done) as Button
         val bt2 = mDialogView.findViewById(R.id.bt_delete) as Button
-        val workoutPartText = mDialogView.findViewById(R.id.et_workoutPart_update) as EditText
-        val workoutNameText = mDialogView.findViewById(R.id.et_workoutName_update) as EditText
-        val weightText = mDialogView.findViewById(R.id.et_weight_update) as EditText
-        val repsText = mDialogView.findViewById(R.id.et_reps_update) as EditText
 
-        workoutPartText.setText(list[position].workoutPart)
+        val workoutNameText = mDialogView.findViewById(R.id.et_workoutName_update) as EditText
+
         workoutNameText.setText(list[position].workoutName)
-        weightText.setText(list[position].weight)
-        repsText.setText(list[position].reps)
 
         val mAlertDialog = mBuilder.show()
         // 수정
         bt1.setOnClickListener {
-            list[position].workoutPart = workoutPartText.text.toString()
             list[position].workoutName = workoutNameText.text.toString()
-            list[position].weight = weightText.text.toString()
-            list[position].reps = repsText.text.toString()
 
             setStringArrayPref("listData", list)
             listviewAdapter.updateReceiptsList(list)

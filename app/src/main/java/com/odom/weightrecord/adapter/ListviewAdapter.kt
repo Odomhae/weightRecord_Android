@@ -12,7 +12,7 @@ import io.realm.RealmList
 
 class ListviewAdapter : BaseAdapter() {
 
-    private var listViewItemList = ArrayList<ListViewItem>() //RealmList<routineList>() //
+    private var listViewItemList = ArrayList<ListViewItem>()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
@@ -24,27 +24,12 @@ class ListviewAdapter : BaseAdapter() {
             view = inflater.inflate(R.layout.listview_item, parent, false)
         }
 
-        val item_workoutPart = view!!.findViewById(R.id.lv_item_workoutPart) as TextView
-        val item_workoutName = view.findViewById(R.id.lv_item_workoutName) as TextView
-        val item_weight = view.findViewById(R.id.lv_item_weight) as TextView
-        val item_reps = view.findViewById(R.id.lv_item_reps) as TextView
+        val item_workoutName = view!!.findViewById(R.id.lv_item_workoutName) as TextView
 
         val listViewItem = listViewItemList[position]
 
         // 아이템 내 각 위젯에 데이터 반영
-        item_workoutPart.text = listViewItem.workoutPart
         item_workoutName.text = listViewItem.workoutName
-
-        // 부위구별 없을때 ex)한줄 메모
-        if(listViewItem.workoutPart != "부위없음"){
-            item_weight.text = listViewItem.weight + "kg"
-            item_reps.text = listViewItem.reps + "번"
-        }else{
-            item_weight.text = listViewItem.weight
-            item_reps.text = listViewItem.reps
-        }
-
-
 
         return view
     }

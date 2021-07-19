@@ -24,15 +24,6 @@ class RecyclerviewAdapter(private var data: ArrayList<ListViewItem>):RecyclerVie
 
         holder.workoutName.text = data[position].workoutName
 
-        if(data[position].workoutPart != "부위없음"){
-            holder.weight.text = data[position].weight + "kg"
-            holder.reps.text = data[position].reps + "번"
-        }else{
-            holder.weight.text = data[position].weight
-            holder.reps.text = data[position].reps
-        }
-
-
         // 폭 설정
         val layoutParams = holder.itemView.layoutParams
         layoutParams.height = 80
@@ -42,6 +33,4 @@ class RecyclerviewAdapter(private var data: ArrayList<ListViewItem>):RecyclerVie
 
 class MyViewHolder(view: View): RecyclerView.ViewHolder(view) {
     var workoutName = view.rv_item_workoutName
-    var weight = view.rv_item_weight
-    var reps = view.rv_item_reps
 }

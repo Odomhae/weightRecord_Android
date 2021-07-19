@@ -17,36 +17,4 @@
         android:textColor="@color/black"
         android:background="@android:color/transparent" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true">
-
-        <TextView
-            android:id="@+id/rv_item_weight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16dp"
-            android:textStyle="bold"
-            android:gravity="right"
-            android:layout_toLeftOf="@id/rv_item_reps"
-            android:layout_gravity="right"
-            android:textColor="@color/black"
-            android:background="@android:color/transparent" />
-
-        <TextView
-            android:id="@+id/rv_item_reps"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:textSize="16dp"
-            android:textStyle="bold"
-            android:gravity="right"
-            android:layout_gravity="right"
-            android:layout_alignParentEnd="true"
-            android:textColor="@color/black"
-            android:background="@android:color/transparent" />
-
-    </LinearLayout>
-
-
 </RelativeLayout>

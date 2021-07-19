@@ -42,6 +42,9 @@ class MainFragment :Fragment() {
         rlayout_tab_list = rootView.findViewById(R.id.rlayout_tab_list) as RelativeLayout
         bt_add_image = rootView.findViewById(R.id.bt_add_image) as Button
 
+        // 처음엔 letter fragment로 시작
+        rlayout_tab_letter!!.isSelected = true
+
         fragmentLetter = LetterFragment.newInstance()
         fragmentImg = ImgFragment.newInstance()
         fragmentList = ListFragment.newInstance()
