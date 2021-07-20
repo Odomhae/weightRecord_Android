@@ -7,7 +7,7 @@
     <EditText
         android:id="@+id/tv_letter"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="300dp"
         android:textSize="25dp"
         android:textColor="@color/black"
         android:hint="여기에 입력하세요" />
@@ -15,7 +15,7 @@
     <Button
         android:id="@+id/bt_letter_save"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:text="임시 저장" />
 
 </LinearLayout>

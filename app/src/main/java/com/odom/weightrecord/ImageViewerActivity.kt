@@ -96,7 +96,9 @@ class ImageViewerActivity : AppCompatActivity() {
 
         }
 
-        tv_img.text = getStringPref("letter").toString()
+        val prefs = getSharedPreferences("LETTER", Context.MODE_PRIVATE)
+        val a = prefs.getString("letter" , "aaaz")
+        tv_img.text = a
 
     }
 
@@ -193,14 +195,15 @@ class ImageViewerActivity : AppCompatActivity() {
     }
 
     // 저장된 글 가져옴
-    private fun getStringPref(key: String) {
-
-        val prefs = getSharedPreferences("LETTER", Context.MODE_PRIVATE)
-        with(prefs.edit()){
-            getStringPref(key)
-            commit()
-        }
-
-    }
+//    private fun getStringPref(key: String) {
+//
+//        val prefs = getSharedPreferences("LETTER", Context.MODE_PRIVATE)
+//        val a = prefs.getString("letter" , "aaaz")
+//        with(prefs.edit()){
+//            getStringPref(key)
+//            commit()
+//        }
+//
+//    }
 
 }
