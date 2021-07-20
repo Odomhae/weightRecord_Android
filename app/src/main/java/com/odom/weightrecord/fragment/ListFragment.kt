@@ -38,12 +38,12 @@ class ListFragment : Fragment() {
         tv_input_workout =  rootView.findViewById<View>(R.id.tv_input_workout) as TextView
 
         // 화면 관련 설정
-        setLayoutActivity()
+        setLayoutFragment()
 
         return rootView
     }
 
-    private fun setLayoutActivity() {
+    private fun setLayoutFragment() {
 
         listView_workout!!.choiceMode = ListView.CHOICE_MODE_NONE
         listView_workout!!.adapter = listviewAdapter

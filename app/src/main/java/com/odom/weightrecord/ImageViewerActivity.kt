@@ -68,10 +68,6 @@ class ImageViewerActivity : AppCompatActivity() {
 
         // 뒤로가기
         bt_close.setOnClickListener { finish() }
-        // 저장하기
-        bt_save.setOnClickListener {
-
-        }
 
         // 공유하기
         // 이미지 + 리사이클러뷰있는 프레임레이아웃을 공유
@@ -84,7 +80,8 @@ class ImageViewerActivity : AppCompatActivity() {
             startActivity(Intent.createChooser(intent, "Share image"))
         }
 
-        var cntClicked =0
+        var cntClicked = 0
+        // 글자색 변경
         bt_txtColor.setOnClickListener {
             cntClicked++
             if(cntClicked %2 == 1){
@@ -99,6 +96,8 @@ class ImageViewerActivity : AppCompatActivity() {
 
         }
 
+        tv_img.text = getStringPref("letter").toString()
+
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -109,6 +108,7 @@ class ImageViewerActivity : AppCompatActivity() {
 
         scaleGestureDetector = ScaleGestureDetector(this, ScaleListener())
 
+        // 리스트 눌러서 이동
         recyclerView_img.setOnTouchListener { v, event ->
             when (event.action) {
 
@@ -127,6 +127,27 @@ class ImageViewerActivity : AppCompatActivity() {
             }
             true
         }
+
+        // 텍스튜뷰 눌러서 이동
+        tv_img.setOnTouchListener { v, event ->
+            when (event.action) {
+
+                MotionEvent.ACTION_DOWN -> {
+                    startX = event.x
+                    startY = event.y
+                }
+
+                MotionEvent.ACTION_MOVE -> {
+                    val movedX: Float = event.x - startX
+                    val movedY: Float = event.y - startY
+
+                    v.x = v.x + movedX
+                    v.y = v.y + movedY
+                }
+            }
+
+            true
+        }
     }
 
 
@@ -142,12 +163,17 @@ class ImageViewerActivity : AppCompatActivity() {
 
             scaleFactor *= scaleGestureDetector.scaleFactor
 
-            // 최소 0.5, 최대 2배
-            scaleFactor = max(0.5f, min(scaleFactor, 2.0f))
+            // 최소 0.5, 최대 4배
+            scaleFactor = max(0.5f, min(scaleFactor, 4.0f))
 
             // 리사이클러뷰에 적용
             recyclerView_img.scaleX = scaleFactor
             recyclerView_img.scaleY = scaleFactor
+
+            // 텍스트뷰에 적용
+            tv_img.scaleX = scaleFactor
+            tv_img.scaleY = scaleFactor
+
             return true
         }
     }
@@ -164,6 +190,17 @@ class ImageViewerActivity : AppCompatActivity() {
         )
 
         return restoredData
+    }
+
+    // 저장된 글 가져옴
+    private fun getStringPref(key: String) {
+
+        val prefs = getSharedPreferences("LETTER", Context.MODE_PRIVATE)
+        with(prefs.edit()){
+            getStringPref(key)
+            commit()
+        }
+
     }
 
 }

@@ -53,12 +53,23 @@
                 android:layout_height="wrap_content" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_gravity="center"
                 android:id="@+id/recyclerView_img"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp" />
+
+            <TextView
+                android:id="@+id/tv_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="ssefassef"
+                android:textSize="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp" />
+
 
         </FrameLayout>
 
