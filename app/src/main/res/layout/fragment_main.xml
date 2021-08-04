@@ -39,28 +39,28 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/rlayout_tab_img"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/rlayout_tab_img"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1">-->
 
-            <TextView
-                android:id="@+id/tv_tab_img"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="사진"
-                android:textColor="@drawable/selector_txt_tab"
-                android:textSize="12sp" />
+<!--            <TextView-->
+<!--                android:id="@+id/tv_tab_img"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:gravity="center"-->
+<!--                android:text="사진"-->
+<!--                android:textColor="@drawable/selector_txt_tab"-->
+<!--                android:textSize="12sp" />-->
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="2.6dp"
-                android:layout_alignParentBottom="true"
-                android:background="@drawable/selector_bottom_line_tab"/>
+<!--            <ImageView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="2.6dp"-->
+<!--                android:layout_alignParentBottom="true"-->
+<!--                android:background="@drawable/selector_bottom_line_tab"/>-->
 
-        </RelativeLayout>
+<!--        </RelativeLayout>-->
 
         <RelativeLayout
             android:id="@+id/rlayout_tab_list"

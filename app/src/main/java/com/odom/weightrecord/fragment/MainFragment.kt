@@ -21,7 +21,7 @@ import com.odom.weightrecord.R
 
 class MainFragment :Fragment() {
 
-    private val arrFragments = arrayOfNulls<Fragment>(3)
+    private val arrFragments = arrayOfNulls<Fragment>(2)
     private var fragmentLetter: LetterFragment? = null
     private var fragmentImg: ImgFragment? = null
     private var fragmentList: ListFragment? = null
@@ -39,7 +39,7 @@ class MainFragment :Fragment() {
         val rootView: View = inflater.inflate(R.layout.fragment_main, container, false)
 
         rlayout_tab_letter = rootView.findViewById(R.id.rlayout_tab_letter) as RelativeLayout
-        rlayout_tab_img = rootView.findViewById(R.id.rlayout_tab_img) as RelativeLayout
+       //rlayout_tab_img = rootView.findViewById(R.id.rlayout_tab_img) as RelativeLayout
         rlayout_tab_list = rootView.findViewById(R.id.rlayout_tab_list) as RelativeLayout
         bt_add_image = rootView.findViewById(R.id.bt_add_image) as Button
 
@@ -52,8 +52,8 @@ class MainFragment :Fragment() {
 
         // 각 뷰페이저
         arrFragments[0] = fragmentLetter
-        arrFragments[1] = fragmentImg
-        arrFragments[2] = fragmentList
+        arrFragments[1] = fragmentList
+        //arrFragments[2] = fragmentImg
 
         vpContent = rootView.findViewById(R.id.vp_content)
         vpContent.overScrollMode = View.OVER_SCROLL_NEVER
@@ -69,8 +69,8 @@ class MainFragment :Fragment() {
         })
 
         rlayout_tab_letter!!.setOnClickListener { vpContent.currentItem = 0 }
-        rlayout_tab_img!!.setOnClickListener { vpContent.currentItem = 1 }
-        rlayout_tab_list!!.setOnClickListener { vpContent.currentItem = 2 }
+        rlayout_tab_list!!.setOnClickListener { vpContent.currentItem = 1 }
+      //  rlayout_tab_img!!.setOnClickListener { vpContent.currentItem = 2 }
 
         bt_add_image!!.setOnClickListener { addImg() }
 
@@ -100,8 +100,8 @@ class MainFragment :Fragment() {
 
         // 눌린 곳만 체크
         rlayout_tab_letter!!.isSelected = (nPosition == 0)
-        rlayout_tab_img!!.isSelected = (nPosition == 1)
-        rlayout_tab_list!!.isSelected = (nPosition == 2)
+        rlayout_tab_list!!.isSelected = (nPosition == 1)
+        // rlayout_tab_img!!.isSelected = (nPosition == 1)
     }
 
     private fun addImg() {

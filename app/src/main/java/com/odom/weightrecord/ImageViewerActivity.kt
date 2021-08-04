@@ -96,10 +96,8 @@ class ImageViewerActivity : AppCompatActivity() {
 
         }
 
-        val prefs = getSharedPreferences("LETTER", Context.MODE_PRIVATE)
-        val a = prefs.getString("letter" , "aaaz")
-        tv_img.text = a
-
+        // 저장된 글 받아옴
+        tv_img.text = getStringPref("letter")
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -165,8 +163,8 @@ class ImageViewerActivity : AppCompatActivity() {
 
             scaleFactor *= scaleGestureDetector.scaleFactor
 
-            // 최소 0.5, 최대 4배
-            scaleFactor = max(0.5f, min(scaleFactor, 4.0f))
+            // 최소 0.2, 최대 20배
+            scaleFactor = max(0.2f, min(scaleFactor, 20.0f))
 
             // 리사이클러뷰에 적용
             recyclerView_img.scaleX = scaleFactor
@@ -188,22 +186,19 @@ class ImageViewerActivity : AppCompatActivity() {
         val gson = Gson()
 
         val restoredData: ArrayList<ListViewItem> = gson.fromJson(json,
-            object : TypeToken<ArrayList<ListViewItem?>>() {}.type
+                object : TypeToken<ArrayList<ListViewItem?>>() {}.type
         )
 
         return restoredData
     }
 
     // 저장된 글 가져옴
-//    private fun getStringPref(key: String) {
-//
-//        val prefs = getSharedPreferences("LETTER", Context.MODE_PRIVATE)
-//        val a = prefs.getString("letter" , "aaaz")
-//        with(prefs.edit()){
-//            getStringPref(key)
-//            commit()
-//        }
-//
-//    }
+    private fun getStringPref(key: String) : String? {
+
+        val prefs = getSharedPreferences("LETTER", Context.MODE_PRIVATE)
+        val savedLetter = prefs.getString(key , " ")
+
+        return savedLetter
+    }
 
 }
