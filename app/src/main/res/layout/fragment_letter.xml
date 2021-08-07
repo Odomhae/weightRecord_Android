@@ -12,16 +12,25 @@
         android:textColor="@color/black"
         android:hint="여기에 입력하세요" />
 
-    <Button
-        android:id="@+id/bt_letter_save"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:text="임시 저장" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/bt_letter_init"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:text="초기화" />
+        <Button
+            android:id="@+id/bt_letter_save"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginRight="20dp"
+            android:text="임시 저장" />
+
+        <Button
+            android:id="@+id/bt_letter_init"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="지우기" />
+
+    </LinearLayout>
+
 
 </LinearLayout>
