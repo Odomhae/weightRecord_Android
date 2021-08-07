@@ -54,13 +54,10 @@ class ListviewAdapter : BaseAdapter() {
     }
 
     // 아이템 데이터 추가를 위한 함수
-    fun addItem(workoutPart: String, workoutName: String, weight: String, reps: String) {
-        val item = ListViewItem() //routineList()//
+    fun addItem(workoutName: String) {
+        val item = ListViewItem()
 
-        item.workoutPart = workoutPart
         item.workoutName = workoutName
-        item.weight = weight
-        item.reps = reps
 
         listViewItemList.add(item)
     }

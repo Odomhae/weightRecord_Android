@@ -4,7 +4,7 @@ package com.odom.weightrecord.utils
 class ListViewItem {
 
     var workoutPart : String? = null
-    var workoutName : String? = null
+    var workoutName : String = ""
     var weight: String? = null
     var reps: String? = null
 }

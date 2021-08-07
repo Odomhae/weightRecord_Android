@@ -11,6 +11,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.odom.weightrecord.R
 import com.odom.weightrecord.adapter.ListviewAdapter
 import com.odom.weightrecord.utils.ListViewItem
@@ -19,11 +20,14 @@ import kotlinx.android.synthetic.main.fragment_list.*
 class ListFragment : Fragment() {
 
     // 리스트뷰 아이템, 리스트뷰 어댑터
-    val items = ArrayList<ListViewItem>()
+    var items = ArrayList<ListViewItem>()
     var listviewAdapter = ListviewAdapter()
 
     var listView_workout : ListView?= null
     var tv_input_workout : TextView?= null
+    var tv_clear_list : TextView?= null
+
+    var itemsEmpty = ArrayList<ListViewItem>()
 
     companion object {
         fun newInstance() = ListFragment().apply {}
@@ -36,6 +40,8 @@ class ListFragment : Fragment() {
 
         listView_workout =  rootView.findViewById<View>(R.id.listView_workout) as ListView
         tv_input_workout =  rootView.findViewById<View>(R.id.tv_input_workout) as TextView
+        tv_clear_list = rootView.findViewById(R.id.tv_clear_list) as TextView
+
 
         // 화면 관련 설정
         setLayoutFragment()
@@ -44,6 +50,24 @@ class ListFragment : Fragment() {
     }
 
     private fun setLayoutFragment() {
+
+        // 리스트있으면 보여주기
+        items = getStringArrayPref("listData")
+        if(items.size > 0) {
+           for(i in 0 until items.size){
+               listviewAdapter.addItem(items[i].workoutName)
+           }
+
+            listviewAdapter.notifyDataSetChanged()
+        }
+
+        //리스트 초기화
+        tv_clear_list!!.setOnClickListener {
+            setStringArrayPref("listData", itemsEmpty)
+            items.clear()
+            listviewAdapter.updateReceiptsList(items)
+            listviewAdapter.notifyDataSetChanged()
+        }
 
         listView_workout!!.choiceMode = ListView.CHOICE_MODE_NONE
         listView_workout!!.adapter = listviewAdapter
@@ -67,11 +91,8 @@ class ListFragment : Fragment() {
         setStringArrayPref("listData", items)
         et_workoutName.setText("")
 
-        // 운동 부위, 종목, 무게, 횟수 저장
-        listviewAdapter.addItem(
-                item1.workoutPart.toString(), item1.workoutName.toString(),
-                item1.weight.toString(), item1.reps.toString()
-        )
+        // 운동종목 저장
+        listviewAdapter.addItem(item1.workoutName.toString())
         listviewAdapter.notifyDataSetChanged()
 
     }
@@ -134,4 +155,20 @@ class ListFragment : Fragment() {
         editor.putString(key, json)
         editor.apply()
     }
+
+
+    // 저장된 배열 받아옴
+    private fun getStringArrayPref(key: String): ArrayList<ListViewItem> {
+
+        val prefs = requireActivity().getSharedPreferences("SETTINGS", Context.MODE_PRIVATE)
+        val json = prefs.getString(key, null)
+        val gson = Gson()
+
+        val restoredData: ArrayList<ListViewItem> = gson.fromJson(json,
+            object : TypeToken<ArrayList<ListViewItem?>>() {}.type
+        )
+
+        return restoredData
+    }
+
 }
