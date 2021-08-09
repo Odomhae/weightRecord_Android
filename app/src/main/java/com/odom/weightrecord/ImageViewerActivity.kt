@@ -21,7 +21,8 @@ import com.odom.weightrecord.utils.WeightRecordUtil.getImageUri
 import com.odom.weightrecord.utils.WeightRecordUtil.setLocalImage
 import com.odom.weightrecord.utils.WeightRecordUtil.viewToBitmap
 import kotlinx.android.synthetic.main.activity_image_viewer.*
-import java.io.*
+import java.io.File
+import java.io.Serializable
 import kotlin.math.max
 import kotlin.math.min
 
@@ -73,7 +74,12 @@ class ImageViewerActivity : AppCompatActivity() {
         // 이미지 + 리사이클러뷰있는 프레임레이아웃을 공유
         bt_share.setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND)
-            val screenshotUri: Uri = Uri.parse(getImageUri(this, viewToBitmap(frameLayout)).toString())
+            val screenshotUri: Uri = Uri.parse(
+                getImageUri(
+                    this,
+                    viewToBitmap(frameLayout)
+                ).toString()
+            )
 
             intent.type = ("image/*")
             intent.putExtra(Intent.EXTRA_STREAM, screenshotUri)
@@ -88,10 +94,13 @@ class ImageViewerActivity : AppCompatActivity() {
                 recyclerView_img.adapter = RecyclerviewAdapter_black(listPref)
                 recyclerView_img.layoutManager = LinearLayoutManager(this)
 
+                tv_img.setTextColor(resources.getColor(R.color.black))
+
             }else{
                 recyclerView_img.adapter = RecyclerviewAdapter(listPref)
                 recyclerView_img.layoutManager = LinearLayoutManager(this)
 
+                tv_img.setTextColor(resources.getColor(R.color.white))
             }
 
         }
@@ -124,6 +133,13 @@ class ImageViewerActivity : AppCompatActivity() {
                     v.x = v.x + movedX
                     v.y = v.y + movedY
                 }
+
+              /*  // 회전
+                MotionEvent.ACTION_POINTER_DOWN -> {
+                    if (event.pointerCount == 2) {
+                        rotateImg(event)
+                    }
+                }*/
             }
             true
         }
@@ -150,8 +166,6 @@ class ImageViewerActivity : AppCompatActivity() {
         }
     }
 
-
-
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
         scaleGestureDetector?.onTouchEvent(event)
@@ -163,8 +177,8 @@ class ImageViewerActivity : AppCompatActivity() {
 
             scaleFactor *= scaleGestureDetector.scaleFactor
 
-            // 최소 0.2, 최대 20배
-            scaleFactor = max(0.2f, min(scaleFactor, 20.0f))
+            // 최소 0.2, 최대 50배
+            scaleFactor = max(0.2f, min(scaleFactor, 50.0f))
 
             // 리사이클러뷰에 적용
             recyclerView_img.scaleX = scaleFactor
@@ -185,8 +199,9 @@ class ImageViewerActivity : AppCompatActivity() {
         val json = prefs.getString(key, null)
         val gson = Gson()
 
-        val restoredData: ArrayList<ListViewItem> = gson.fromJson(json,
-                object : TypeToken<ArrayList<ListViewItem?>>() {}.type
+        val restoredData: ArrayList<ListViewItem> = gson.fromJson(
+            json,
+            object : TypeToken<ArrayList<ListViewItem?>>() {}.type
         )
 
         return restoredData
@@ -196,7 +211,7 @@ class ImageViewerActivity : AppCompatActivity() {
     private fun getStringPref(key: String) : String? {
 
         val prefs = getSharedPreferences("LETTER", Context.MODE_PRIVATE)
-        val savedLetter = prefs.getString(key , " ")
+        val savedLetter = prefs.getString(key, " ")
 
         return savedLetter
     }
